@@ -1,0 +1,15 @@
+simulation:
+  max_simulation_time: -1
+
+game:
+  enable_field: false
+  game_state_logging: false
+  game_duration: -1
+  automatic_restart: false
+  initial_phase_duration: 0
+  ready_phase_duration: 0
+  set_phase_duration: 0
+  kickoff_subphase_duration: 0
+  other_subphase_duration: 0
+  first_kickoff_team: "red"
+  penalty_duration: 0

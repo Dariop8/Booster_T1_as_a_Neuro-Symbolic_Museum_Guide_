@@ -1,0 +1,77 @@
+{
+  "domain": "perception_vlm_classification",
+  "n_directions": 6,
+  "n_repeats_per_direction": 2,
+  "accuracy_overall": 1.0,
+  "robustness_per_direction": {
+    "point_left_mid": 1.0,
+    "point_left": 1.0,
+    "point_front_left": 1.0,
+    "point_front_right": 1.0,
+    "point_right": 1.0,
+    "point_right_mid": 1.0
+  },
+  "efficiency_mean_latency_ms": 1047.9,
+  "per_direction": [
+    {
+      "gesture": "point_left_mid",
+      "expected_painting_id": "p2",
+      "answers": [
+        "p2",
+        "p2"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 1088.0
+    },
+    {
+      "gesture": "point_left",
+      "expected_painting_id": "p1",
+      "answers": [
+        "p1",
+        "p1"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 630.3
+    },
+    {
+      "gesture": "point_front_left",
+      "expected_painting_id": "p7",
+      "answers": [
+        "p7",
+        "p7"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 1108.0
+    },
+    {
+      "gesture": "point_front_right",
+      "expected_painting_id": "p8",
+      "answers": [
+        "p8",
+        "p8"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 1335.3
+    },
+    {
+      "gesture": "point_right",
+      "expected_painting_id": "p3",
+      "answers": [
+        "p3",
+        "p3"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 851.9
+    },
+    {
+      "gesture": "point_right_mid",
+      "expected_painting_id": "p5",
+      "answers": [
+        "p5",
+        "p5"
+      ],
+      "accuracy": 1.0,
+      "mean_latency_ms": 1274.0
+    }
+  ]
+}

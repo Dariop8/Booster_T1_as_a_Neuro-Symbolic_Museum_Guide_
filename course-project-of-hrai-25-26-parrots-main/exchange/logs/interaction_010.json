@@ -1,0 +1,47 @@
+{
+  "user_text": "ciao, vorrei vedere un quadro",
+  "user_model": {
+    "profile": "novice",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "novice"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "candidate_scores": {
+    "p1": 2,
+    "p8": 2,
+    "p6": 2,
+    "p3": 2,
+    "p4": 2,
+    "p7": 2
+  },
+  "robot_messages": {
+    "main": "Ciao, sono felice di consigliarti un quadro che potrebbe piacerti, come ad esempio \"Water Lilies\" di Claude Monet, che si trova proprio a sinistra di \"Sunflower Field with Cypresses\". Io ti consiglio questo dipinto perché è immediatamente bello, Monet non stava cercando di riprodurre il laghetto esattamente com'era, ma stava catturando la sensazione della luce e del colore sull'acqua in un momento specifico, creando un'atmosfera unica e suggestiva. La tecnica impressionista utilizzata da Monet dà vita a un'esplosione di colori, con toni di blu, verde e violetto che sembrano danzare sulla tela, creando un effetto visivo davvero emozionante. Inoltre, il fatto che Monet abbia dipinto questo quadro nel 1906, all'apice del movimento impressionista, lo rende un esempio significativo di come gli artisti di quel periodo cercassero di catturare la realtà in modo nuovo e innovativo.",
+    "follow_up": "Ti è piaciuto \"Water Lilies\" o vorresti saperne di più su questo quadro o vedere un'altra opera?"
+  }
+}

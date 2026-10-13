@@ -1,0 +1,48 @@
+user_profiles:
+  child:
+    description: "young visitor or visitor asking for a simple and playful explanation"
+    preferred_explanation_style: "storytelling"
+    max_sentence_length: "short"
+    technical_terms: false
+    recommended_explanation_key: "child"
+    social_strategy:
+      greeting: "friendly"
+      question_style: "simple_choice"
+      gesture_amplitude: "large"
+      explanation_length: "short"
+
+  novice:
+    description: "adult visitor with no specific art expertise"
+    preferred_explanation_style: "clear"
+    max_sentence_length: "medium"
+    technical_terms: false
+    recommended_explanation_key: "novice"
+    social_strategy:
+      greeting: "polite"
+      question_style: "guided"
+      gesture_amplitude: "normal"
+      explanation_length: "normal"
+
+  expert:
+    description: "visitor interested in technique, style, composition, or historical details"
+    preferred_explanation_style: "technical"
+    max_sentence_length: "long"
+    technical_terms: true
+    recommended_explanation_key: "expert"
+    social_strategy:
+      greeting: "professional"
+      question_style: "open"
+      gesture_amplitude: "normal"
+      explanation_length: "detailed"
+
+  tourist_short_time:
+    description: "visitor with limited time"
+    preferred_explanation_style: "concise"
+    max_sentence_length: "short"
+    technical_terms: false
+    recommended_explanation_key: "short"
+    social_strategy:
+      greeting: "direct"
+      question_style: "minimal"
+      gesture_amplitude: "normal"
+      explanation_length: "short"

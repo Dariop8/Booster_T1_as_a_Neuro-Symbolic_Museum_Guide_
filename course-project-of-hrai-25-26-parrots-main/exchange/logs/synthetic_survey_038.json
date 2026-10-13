@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "generated_by": "llm-roleplay (llama-3.3-70b-versatile)",
+  "godspeed_ratings": {
+    "anthropomorphism": 3,
+    "animacy": 4,
+    "likeability": 3,
+    "perceived_intelligence": 2,
+    "perceived_safety": 4
+  },
+  "independent_variables": {
+    "hypothesis": "H2",
+    "condition": "explicit",
+    "persona": "turista_di_fretta"
+  },
+  "session_covariates": {
+    "clarification_count": 0,
+    "paintings_shown": 1,
+    "final_profile": "child"
+  }
+}

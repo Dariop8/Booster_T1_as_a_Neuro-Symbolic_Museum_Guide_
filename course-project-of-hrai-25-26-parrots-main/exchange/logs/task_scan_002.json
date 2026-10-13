@@ -1,0 +1,15 @@
+{
+  "n_repeats": 1,
+  "completion_rate": 0.0,
+  "mean_wall_s": 12.6,
+  "mean_classification_accuracy": null,
+  "mean_scene_graph_wall_accuracy": null,
+  "mean_return_to_home_error_m": null,
+  "runs": [
+    {
+      "completed_full_circuit": false,
+      "error": "discovered_paintings.json not refreshed by this run (subprocess exit code 0) — tail of its output: t.\n\n[Explorer] → standing in front of slot (point_right_mid)  (walking to 0.5,1.8)\n[Explorer]   Failed to reach standing spot — skipping this slot.\n\n[Explorer] → standing in front of slot (point_right)  (walking to 2.5,1.8)\n[Explorer]   Failed to reach standing spot — skipping this slot.\n\n[Explorer] Walking back to home position (3.8,0.0).\n\n[Explorer] ❌ Nessuna direzione riconosciuta — file discovered NON aggiornati.\n[Explorer]    Controlla che circus sia in esecuzione e GROQ_API_KEY sia valida.",
+      "wall_s": 12.6
+    }
+  ]
+}

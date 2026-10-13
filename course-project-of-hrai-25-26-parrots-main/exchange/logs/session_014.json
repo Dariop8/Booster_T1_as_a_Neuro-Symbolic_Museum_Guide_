@@ -1,0 +1,16 @@
+{
+  "input_mode": "text",
+  "duration_s": 193.9,
+  "turns": 5,
+  "clarification_count": 0,
+  "paintings_shown": 0,
+  "final_user_model": {
+    "profile": "unknown",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "serene",
+    "preferred_mood_source": "face",
+    "language": "it",
+    "role": "staff"
+  }
+}

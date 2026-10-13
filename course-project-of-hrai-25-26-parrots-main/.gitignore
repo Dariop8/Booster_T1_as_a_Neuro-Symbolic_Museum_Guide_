@@ -1,0 +1,14 @@
+# build artifacts
+build/
+install/
+log/
+
+# python
+__pycache__/
+*.py[cod]
+
+# residui Windows/WSL
+*Zone.Identifier
+
+# temporanei di runtime
+exchange/temp_audio.wav

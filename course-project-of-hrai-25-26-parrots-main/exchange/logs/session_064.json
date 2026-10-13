@@ -1,0 +1,21 @@
+{
+  "input_mode": "text",
+  "duration_s": 82.6,
+  "turns": 4,
+  "clarification_count": 0,
+  "social_refusal_count": 0,
+  "paintings_shown": 2,
+  "final_user_model": {
+    "profile": "expert",
+    "interests": {
+      "technique": 0.8,
+      "history": 0.6,
+      "emotion": 0.7
+    },
+    "available_time": "normal",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "it",
+    "role": "visitor"
+  }
+}

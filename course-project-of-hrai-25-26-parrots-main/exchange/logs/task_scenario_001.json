@@ -1,0 +1,40 @@
+{
+  "target_subject": "complex_system",
+  "target_use": "technical_specifications",
+  "execution_mode": "closed_loop",
+  "environment_type": "simulation",
+  "scenarios": [
+    {
+      "scenario": "novice_color",
+      "description": "Baseline happy path: greeting -> recommend -> detail -> goodbye, checks the stated interest (color) survived into the final user model.",
+      "n_repeats": 1,
+      "completion_rate": 1.0,
+      "success_rate": 1.0,
+      "runs": [
+        {
+          "completed": true,
+          "success": true,
+          "wall_s": 90.9,
+          "summary": {
+            "input_mode": "text",
+            "duration_s": 89.5,
+            "turns": 3,
+            "clarification_count": 0,
+            "paintings_shown": 1,
+            "final_user_model": {
+              "profile": "novice",
+              "interests": {
+                "color": 0.45
+              },
+              "available_time": "unknown",
+              "preferred_mood": "unknown",
+              "preferred_mood_source": null,
+              "language": "it",
+              "role": "visitor"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "user_text": "I'm here on a school trip with my class. Can you show me a painting with many colors?",
+  "user_model": {
+    "profile": "child",
+    "interests": {
+      "color": 0.8
+    },
+    "available_time": "unknown",
+    "preferred_mood": "dynamic",
+    "preferred_mood_source": "face",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "tell_story",
+      "point_gesture",
+      "simple_question"
+    ],
+    "pointing_skill": "point_front_right",
+    "explanation_key": "child"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "You should look at Water Lilies by Claude Monet! It is full of beautiful blues, greens, and violets. Monet painted this pond many times because he loved how the light changed the colors every day. Can you see the reflections in the water? It is right next to Las Meninas.",
+    "follow_up": "Did you like the colors in Water Lilies, or would you like to see another painting?"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "user_text": "grazie, arrivederci",
+  "user_model": {
+    "profile": "unknown",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "novice"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": false,
+  "candidate_scores": {
+    "p1": 2,
+    "p8": 2,
+    "p6": 2,
+    "p3": 2,
+    "p4": 2,
+    "p7": 2
+  },
+  "robot_messages": {
+    "main": "I recommend Water Lilies. I recommend this painting because it is immediately beautiful. Monet was not trying to paint the pond exactly as it looked — he was capturing the feeling of light and color on the water at a specific moment. You'll find it to the left of \"Sunflower Field with Cypresses\".",
+    "follow_up": "Did you enjoy \"Water Lilies\"? Would you like to know more or see another one?"
+  }
+}

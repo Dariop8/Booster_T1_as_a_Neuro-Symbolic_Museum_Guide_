@@ -1,0 +1,117 @@
+robot:
+  id: booster_t1
+  embodiment: "humanoid"
+  role: "stationary museum guide"
+
+  capabilities:
+    speech:
+      enabled: true
+      description: "The robot can produce verbal explanations and dialogue messages."
+      skill_name: "say"
+
+    # gaze:
+    #   enabled: true
+    #   skills:
+    #     - look_at_user
+    #     - look_left
+    #     - look_center
+    #     - look_right
+    #     - look_far_left
+
+    pointing:
+      enabled: true
+      description: >
+        The robot can point at the painting's actual 3D position (estimated
+        by the depth camera during the scan, see museum_guide_src/
+        camera_projection.py) via arm inverse kinematics (museum_guide_src/
+        ik/ik_solver.py), continuous rather than a fixed set of directions.
+        Falls back to one of six predefined HPP-based arm trajectories when
+        no scan-derived position is available yet, or the IK/goal backend
+        can't be used (see fallback_actions.cannot_point).
+      skill_name: "point_at"
+      # NOTE: check_feasibility() in guida_museale_core.py reads this exact
+      # key (capabilities.pointing.skills) as the "predefined, safety-
+      # validated skill set" for its projection_score — keep the name even
+      # though these are now the fallback gestures, not the primary skill.
+      skills:
+        - point_left
+        - point_right
+        - point_front_left
+        - point_front_right
+        - point_left_mid
+        - point_right_mid
+
+    locomotion:
+      enabled: false
+      reason: "The robot is stationary in this project scenario."
+
+    manipulation:
+      enabled: false
+      reason: "Museum artworks must not be touched."
+
+    gaze:
+      enabled: true
+      description: >
+        Head yaw/pitch aim at the same 3D target as the arm when pointing
+        (ik_solver.solve_head_look_at), bundled with point_at rather than an
+        independently invocable skill — no standalone look_at_user/look_left/
+        look_right/look_far_left actions exist.
+
+    torso_orientation:
+      enabled: false
+      reason: "Torso orientation toward paintings is not implemented in the current version."
+
+    staff_mode:
+      enabled: true
+      description: >
+        Operational commands available ONLY to an authenticated staff member
+        (see guida_museale_core._STAFF_PASSPHRASE / dialogue_manager's role
+        gate on staff_* intents) — a regular visitor cannot invoke these
+        regardless of how they phrase a request. Re-scanning re-perceives the
+        room (museum_explorer.explore_museum) and reloads the knowledge base
+        (guida_museale_core.reload_kb); toggling availability suspends/
+        restores a painting from proactive recommendations without removing
+        it from the catalog (knowledge_graph.set_maintenance).
+      skills:
+        - rescan_room
+        - toggle_painting_availability
+
+
+  constraints:
+    stationary_robot: true
+    cannot_touch_artworks: true
+    cannot_move_close_to_artworks: true
+    cannot_use_gaze_control: false  # bundled with point_at, see capabilities.gaze
+    cannot_use_torso_orientation: true
+    must_use_predefined_pointing_gestures: false  # point_at is continuous IK; the 4 gestures are now only the fallback
+    must_avoid_sensitive_user_inference: true
+    must_use_declared_or_dialogue_based_user_profile: true
+
+  available_interaction_actions:
+    - say
+    - point_at
+    - point_left
+    - point_right
+    - point_front_left
+    - point_front_right
+    - point_left_mid
+    - point_right_mid
+
+  unavailable_interaction_actions:
+    - look_at_user
+    - look_left
+    - look_center
+    - look_right
+    - look_far_left
+    - point_center
+    - point_far_left
+    - walk_to_painting
+    - touch_painting
+    - grasp_object
+
+  fallback_actions:
+    unknown_user_preference: "ask_clarification"
+    cannot_point: "use_spatial_language"
+    painting_not_visible: "choose_alternative"
+    explanation_not_available: "use_novice_explanation"
+    gaze_not_available: "use_pointing_and_verbal_reference"

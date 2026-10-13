@@ -1,0 +1,200 @@
+{
+  "target_subject": "complex_system",
+  "target_use": "technical_specifications",
+  "execution_mode": "closed_loop",
+  "environment_type": "simulation",
+  "scenarios": [
+    {
+      "scenario": "novice_color",
+      "description": "Baseline happy path: greeting -> recommend -> detail -> goodbye, checks the stated interest (color) survived into the final user model.",
+      "n_repeats": 3,
+      "completion_rate": 0.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.4
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.7
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.6
+        }
+      ]
+    },
+    {
+      "scenario": "expert_dramatic",
+      "description": "Mood-driven session with a follow-up detail question and a second recommendation request — checks 2 paintings were shown and the mood the visitor asked for stuck.",
+      "n_repeats": 3,
+      "completion_rate": 0.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 10.0
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 10.6
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 10.2
+        }
+      ]
+    },
+    {
+      "scenario": "staff_ops",
+      "description": "Staff authentication + an operational command — checks the role gate (dialogue_manager.get_next_action) actually flips to staff and stays for the rest of the session.",
+      "n_repeats": 3,
+      "completion_rate": 0.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 2.0
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 2.3
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 2.4
+        }
+      ]
+    },
+    {
+      "scenario": "ambiguous_input",
+      "description": "Deliberately vague visitor input — checks the low-confidence clarification path (handle_clarification) actually fires at least once.",
+      "n_repeats": 3,
+      "completion_rate": 0.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 10.3
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.9
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.7
+        }
+      ]
+    },
+    {
+      "scenario": "accommodating",
+      "description": "Low-friction visitor who accepts every recommendation readily — the easy end of the difficulty spectrum, mainly a baseline to contrast against 'never_satisfied' below.",
+      "n_repeats": 3,
+      "completion_rate": 0.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.7
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 9.3
+        },
+        {
+          "completed": false,
+          "success": false,
+          "wall_s": 10.4
+        }
+      ]
+    },
+    {
+      "scenario": "never_satisfied",
+      "description": "Visitor who rejects every recommendation in a row, enough times to exhaust the hung catalog and force kg.reopen_gallery() at least once — checks the system degrades gracefully (keeps recommending, reaches a natural goodbye) instead of stalling or repeating the same painting forever.",
+      "n_repeats": 3,
+      "completion_rate": 1.0,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "completed": true,
+          "success": false,
+          "wall_s": 20.3,
+          "summary": {
+            "input_mode": "text",
+            "duration_s": 9.2,
+            "turns": 5,
+            "clarification_count": 2,
+            "paintings_shown": 1,
+            "final_user_model": {
+              "profile": "unknown",
+              "interests": {},
+              "available_time": "unknown",
+              "preferred_mood": "unknown",
+              "preferred_mood_source": null,
+              "language": "it",
+              "role": "visitor"
+            }
+          }
+        },
+        {
+          "completed": true,
+          "success": false,
+          "wall_s": 21.6,
+          "summary": {
+            "input_mode": "text",
+            "duration_s": 10.2,
+            "turns": 5,
+            "clarification_count": 2,
+            "paintings_shown": 1,
+            "final_user_model": {
+              "profile": "unknown",
+              "interests": {},
+              "available_time": "unknown",
+              "preferred_mood": "unknown",
+              "preferred_mood_source": null,
+              "language": "it",
+              "role": "visitor"
+            }
+          }
+        },
+        {
+          "completed": true,
+          "success": false,
+          "wall_s": 20.6,
+          "summary": {
+            "input_mode": "text",
+            "duration_s": 9.5,
+            "turns": 5,
+            "clarification_count": 2,
+            "paintings_shown": 1,
+            "final_user_model": {
+              "profile": "unknown",
+              "interests": {},
+              "available_time": "unknown",
+              "preferred_mood": "unknown",
+              "preferred_mood_source": null,
+              "language": "it",
+              "role": "visitor"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

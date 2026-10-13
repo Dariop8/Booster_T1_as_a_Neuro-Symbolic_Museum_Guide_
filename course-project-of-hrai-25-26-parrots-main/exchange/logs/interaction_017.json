@@ -1,0 +1,41 @@
+{
+  "user_text": "mi piacciono i quadri drammatici, ho tempo",
+  "user_model": {
+    "profile": "novice",
+    "interests": {
+      "emotion": 0.8
+    },
+    "available_time": "normal",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p4",
+    "title": "The Scream",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "emotional"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": false,
+  "robot_messages": {
+    "main": "Visto il tuo amore per le emozioni intense, ti consiglio vivamente \"L'Urlo\" di Edvard Munch, che si trova proprio a sinistra de \"Le Ninfee\" di Monet. In quest'opera, la figura centrale non ha paura di ciò che vede, ma del proprio sentimento interiore, catturando quel preciso istante in cui l'ansia ci travolge dall'interno e fa vibrare tutto il mondo circostante. Lo stile espressionista di Munch usa colori accesi come l'arancione e il rosso per trasmettere questa turbolenza psicologica, rendendo l'atmosfera stessa un riflesso dell'angoscia del protagonista. È un capolavoro che parla direttamente all'anima, mostrando come l'arte possa dare forma a emozioni universali e profonde. Il Grido si trova proprio a sinistra dei Giacinti d'acqua.",
+    "follow_up": "Ti è piaciuto l'intenso impatto emotivo de \"L'Urlo\" o preferiresti scoprire un'altra opera del museo?"
+  }
+}

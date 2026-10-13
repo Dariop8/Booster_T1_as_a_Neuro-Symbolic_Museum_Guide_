@@ -1,0 +1,19 @@
+{
+  "input_mode": "text",
+  "duration_s": 211.2,
+  "turns": 4,
+  "clarification_count": 0,
+  "paintings_shown": 2,
+  "final_user_model": {
+    "profile": "tourist_short_time",
+    "interests": {
+      "color": 0.8,
+      "history": 0.8
+    },
+    "available_time": "short",
+    "preferred_mood": "serene",
+    "preferred_mood_source": "face",
+    "language": "en",
+    "role": "visitor"
+  }
+}

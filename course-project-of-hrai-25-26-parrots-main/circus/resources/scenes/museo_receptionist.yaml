@@ -1,0 +1,552 @@
+simulation_config: hrai
+
+# Optional (SceneParser.cpp): skips the default infinite debug-checker floor
+# so the room can have its own floor object below, sized to just the room
+# footprint instead of a 40x40 m plane. Only applies to non-RoboCup-field
+# scenes, so other scenes are unaffected.
+disable_default_floor: true
+
+# Optional (SceneParser.cpp): replaces the default single flat/ambient light
+# with a warm gallery setup — one shadow-casting key light plus soft ambient
+# and directional fills toward each wall, so no painting goes dark/uneven.
+# Empty/absent "lights:" elsewhere keeps the old single-light behavior, so
+# other scenes (RoboCup included) are unaffected.
+lights:
+  # Soft base fill so nothing goes fully dark — much dimmer than the old
+  # single light (0.95) now that directional lights add real brightness too.
+  - position: [0.0, 0.0, 50.0]
+    direction: [0.0, 0.0, -1.0]
+    ambient: [0.42, 0.42, 0.42]
+
+  # Warm overhead key light, room-centered — the one that casts real shadows
+  # (bench, plant, desk, robot) for actual depth instead of flat lighting.
+  - position: [2.25, 0.0, 3.0]
+    direction: [0.0, 0.0, -1.0]
+    diffuse: [0.55, 0.50, 0.42]
+    specular: [0.15, 0.15, 0.13]
+    castshadow: true
+
+  # Directional fills angled toward each wall of paintings, so the front
+  # wall (p1/p2) and both side walls (p3/p5, p4/p6) stay evenly lit — no
+  # shadow casting here, avoids stacking multiple hard shadows.
+  - position: [0.5, 0.0, 2.4]
+    direction: [-0.5, 0.0, -0.75]
+    diffuse: [0.28, 0.26, 0.22]
+  - position: [3.5, 2.8, 2.2]
+    direction: [-0.35, 0.55, -0.75]
+    diffuse: [0.30, 0.28, 0.24]
+  - position: [3.5, -2.8, 2.2]
+    direction: [-0.35, -0.55, -0.75]
+    diffuse: [0.30, 0.28, 0.24]
+
+teams:
+  red:
+    - type: Booster-T1
+      number: 1
+      position: [4.8, 0.0, 0.68]
+      orientation: [0.0, 0.0, 3.14]   # robot guarda verso l'ingresso (-x)
+
+# Layout stanza museo (half-extents passati direttamente a MuJoCo):
+#
+#   +─────────────[ parete_galleria x=6.0 ]─────────────+
+#   │                    (nessun quadro)                │
+#   │                     [p5]         [p3]             │  y=4.0 (parete_destra)
+#   │   [ROBOT 4.8,0]  [bancone 3.6,0]                  │
+#   │        ↑ visitatore_1 cammina lungo x=1.5 ↓       │
+#   │              visitatore_4: ← y=-1.4 →             │
+#   │                     [p6]         [p4]             │  y=-4.0 (parete_sinistra)
+#   │                                                   │
+#   │[p1]                                  [p2]         │
+#   +───[ingr_sx]───────[PORTA 1.6m]───────[ingr_dx]────+
+#                           x=-1.5
+#
+# x cresce verso la galleria; y>0 → destra, y<0 → sinistra
+# Stanza 7.5 x 8.0 m (x: -1.5..6.0, y: -4.0..4.0).
+# Pareti alte 2.5 m (half-ext z=1.25, center z=1.25)
+# p5/p6 (x=0.75) e p3/p4 (x=3.0) spezzano il tratto espositivo delle pareti
+# laterali in campate uguali da 2.25 m a partire dall'ingresso (x=-1.5);
+# l'ultimo tratto (x=3.0..6.0) e' la zona reception (bancone + robot).
+
+objects:
+
+  # ── PAVIMENTO ────────────────────────────────────────────────────────────
+  # Dimensionato sull'impronta reale della stanza (x:-1.5..6.0, y:-4.0..4.0),
+  # non un piano infinito — vedi "disable_default_floor" sopra.
+  - name: pavimento_museo
+    type: box
+    position: [2.25, 0.0, 0.0]
+    size: [3.75, 4.0, 0.02]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: floor_terrazzo.png
+
+  # ── PARETI ────────────────────────────────────────────────────────────────
+
+  # Parete galleria (in fondo, nessun quadro)
+  - name: parete_galleria
+    type: box
+    position: [6.0, 0.0, 1.25]
+    size: [0.1, 4.0, 1.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # Parete ingresso – sezione sinistra (y: -4.0 → -0.8)
+  - name: parete_ingresso_sx
+    type: box
+    position: [-1.5, -2.4, 1.25]
+    size: [0.1, 1.6, 1.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # Parete ingresso – sezione destra (y: 0.8 → 4.0)
+  - name: parete_ingresso_dx
+    type: box
+    position: [-1.5, 2.4, 1.25]
+    size: [0.1, 1.6, 1.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # Architrave sopra la porta (porta: y: -0.8 → 0.8, larg. 1.6 m; z: 2.0 → 2.5)
+  - name: architrave_porta
+    type: box
+    position: [-1.5, 0.0, 2.25]
+    size: [0.1, 0.8, 0.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # Parete laterale sinistra (y=-4.0, ospita i quadri p4 e p6)
+  - name: parete_sinistra
+    type: box
+    position: [2.25, -4.0, 1.25]
+    size: [3.75, 0.1, 1.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # Parete laterale destra (y=4.0, ospita i quadri p3 e p5)
+  - name: parete_destra
+    type: box
+    position: [2.25, 4.0, 1.25]
+    size: [3.75, 0.1, 1.25]
+    fixed: true
+    texture: wall_plaster.png
+
+  # ── ZOCCOLO (baseboard) ─────────────────────────────────────────────────────
+  # Fascia scura alla base di ogni parete, protrude leggermente verso
+  # l'interno della stanza — semplice dettaglio da galleria classica.
+  - name: zoccolo_galleria
+    type: box
+    position: [5.85, 0.0, 0.15]
+    size: [0.15, 4.0, 0.15]
+    fixed: true
+    rgba: [0.22, 0.14, 0.07, 1.0]
+
+  - name: zoccolo_ingresso_sx
+    type: box
+    position: [-1.35, -2.4, 0.15]
+    size: [0.15, 1.6, 0.15]
+    fixed: true
+    rgba: [0.22, 0.14, 0.07, 1.0]
+
+  - name: zoccolo_ingresso_dx
+    type: box
+    position: [-1.35, 2.4, 0.15]
+    size: [0.15, 1.6, 0.15]
+    fixed: true
+    rgba: [0.22, 0.14, 0.07, 1.0]
+
+  - name: zoccolo_sinistra
+    type: box
+    position: [2.25, -3.85, 0.15]
+    size: [3.75, 0.15, 0.15]
+    fixed: true
+    rgba: [0.22, 0.14, 0.07, 1.0]
+
+  - name: zoccolo_destra
+    type: box
+    position: [2.25, 3.85, 0.15]
+    size: [3.75, 0.15, 0.15]
+    fixed: true
+    rgba: [0.22, 0.14, 0.07, 1.0]
+
+  # ── BANCONE RECEPTION ──────────────────────────────────────────────────────
+  # Robot a x=4.8, bancone davanti (verso ingresso) a x=3.6
+
+  - name: bancone_reception
+    type: box
+    position: [3.6, 0.0, 0.375]
+    size: [0.3, 0.5, 0.375]
+    fixed: true
+    rgba: [0.45, 0.28, 0.12, 1.0]
+
+  - name: piano_bancone
+    type: box
+    position: [3.65, 0.0, 0.77]
+    size: [0.33, 0.53, 0.02]
+    fixed: true
+    rgba: [0.35, 0.20, 0.08, 1.0]
+
+  # ── ARREDO GALLERIA ───────────────────────────────────────────────────────
+  # Panca al centro della sala, tra i quadri intermedi (x=0.75) e il bancone —
+  # spazio aperto, non blocca porta né linee di vista sui quadri.
+  - name: panca_seduta
+    type: box
+    position: [2.2, 0.0, 0.43]
+    size: [0.18, 0.55, 0.03]
+    fixed: true
+    rgba: [0.55, 0.38, 0.20, 1.0]
+
+  - name: panca_gamba_1
+    type: box
+    position: [2.2, -0.45, 0.20]
+    size: [0.05, 0.05, 0.20]
+    fixed: true
+    rgba: [0.30, 0.19, 0.10, 1.0]
+
+  - name: panca_gamba_2
+    type: box
+    position: [2.2, 0.45, 0.20]
+    size: [0.05, 0.05, 0.20]
+    fixed: true
+    rgba: [0.30, 0.19, 0.10, 1.0]
+
+  # ── VISITATORI ────────────────────────────────────────────────────────────
+  # "role: person" li tiene FUORI dalla mappa statica (nav_map.PERCEIVED_ROLES)
+  # e li fa pubblicare come ground truth a runtime dal simulatore
+  # (PeopleGroundTruthWriter.h), perche' il T1 non ha ne' lidar ne' un person
+  # detector: quel canale sostituisce il sensore mancante, e people_sensor.py
+  # decide per portata e linea di vista quanto il robot puo' saperne. Vale
+  # identico per chi cammina: il "finto sensore" e' lo stesso canale, che
+  # rilegge la posa da MuJoCo a ogni step invece di riecheggiare questo file.
+  #
+  # >>> "size:" QUI E' L'IMPRONTA PERCETTIVA, NON LA GEOMETRIA. <<<
+  # Per un oggetto "type: mesh" SceneParser NON emette "size" nell'XML (le
+  # dimensioni le prende il .obj), ma AppWindow.cpp lo legge per costruire la
+  # voce del canale persone: raggio = max(size[0], size[1]), altezza =
+  # 2*size[2]. Sono percio' rimasti esattamente i valori che avevano i cilindri
+  # — raggio 0.20 m — cosi' il modello sensoriale e l'inflazione del planner
+  # sono immutati rispetto a prima delle mesh. Toglierlo NON da' errore: fa
+  # cadere il raggio al default 0.05 m e stringe la clearance da 0.65 a 0.50 m
+  # in silenzio.
+  #
+  # La mesh e' piu' larga del cilindro che rappresenta (guscio convesso ~0.30 m
+  # di raggio contro i 0.20 dichiarati). Non incide sulla navigazione: il
+  # planner tiene comunque il robot a 0.65 m dal centro, quindi il guscio non
+  # viene mai toccato — e se lo fosse, l'aggiramento avrebbe gia' fallito.
+  #
+  # I modelli sono visitatori da museo di OpenRobotics su Gazebo Fuel, scelti
+  # perche' sono .obj nativi con UNA sola texture atlas (MuJoCo applica un solo
+  # materiale per mesh). "scale" porta ciascuno all'altezza dichiarata sopra.
+  # Scaricali con: python3 resources/meshes/objects/download_objects.py
+  #
+  # Piazzati uno per tratto del circuito di scansione, in modo che l'aggiramento
+  # debba avvenire davvero e non per caso:
+  #   visitatore_1  IN MOVIMENTO, attraversa la sala lungo x=1.5 e taglia
+  #                 entrambi i tratti lungo le pareti laterali
+  #   visitatore_2  fermo, sul tratto parete destra  point_right_mid -> point_right
+  #   visitatore_3  fermo, sulla traversata d'ingresso point_front_left -> point_front_right
+  #   visitatore_4  IN MOVIMENTO, taglia a meta' la tratta di uscita dalla
+  #                 reception  home -> point_left, che era l'unica del circuito
+  #                 senza alcun ostacolo
+  # Il terzo e' anche l'unico invisibile dalla posa di reception (4.8, 0): il
+  # bancone e la panca gli stanno davanti, quindi il robot lo scopre solo
+  # arrivandoci, che e' il caso interessante da mostrare.
+  #
+  # Resta deliberatamente libera la sola tratta di RIENTRO point_right -> home:
+  # per coprirla servirebbe far girare qualcuno attorno alla reception, ma la
+  # fascia tra il piano del bancone (x=3.98) e il robot fermo in posa (x=4.8)
+  # e' larga 0.8 m — meno della somma di ingombro persona + raggio robot +
+  # clearance (0.65 m) — quindi un percorso li' passerebbe o dentro il bancone
+  # o cosi' vicino al robot da finire nel caso "troppo vicino per pianificarci
+  # attorno" di _people_layer. Una geometria che regge per 2 cm non e' una
+  # dimostrazione di obstacle avoidance, e' un incidente in attesa.
+  #
+  # ORIENTAMENTO. Le mesh, a differenza dei cilindri, hanno un davanti.
+  #   - fermi: "orientation: [roll, pitch, yaw]" in radianti, come per i robot;
+  #   - in movimento: PeopleWalker.h scrive mocap_quat a ogni step dalla
+  #     direzione di marcia, quindi "orientation" su di loro sarebbe ignorato
+  #     (un corpo mocap prende tutta la posa da mocap_pos/mocap_quat) e non e'
+  #     indicato. Serve invece "motion.forward_yaw": lo yaw a cui punta il
+  #     DAVANTI del modello quando l'oggetto non e' ruotato, che il walker
+  #     sottrae alla direzione di marcia.
+  # Verificato misurando la direzione della punta delle scarpe sui vertici in
+  # coordinate mondo: visitor_male_phone guarda +x (forward_yaw 0),
+  # visitor_female guarda -y (forward_yaw -pi/2).
+
+  # ── Visitatore che CAMMINA ────────────────────────────────────────────────
+  # L'unico ostacolo mobile della prima meta' del circuito. "motion:" (vedi
+  # SceneParser.h -> MotionSpec e PeopleWalker.h) lo costruisce come corpo
+  # mocap e lo fa avanzare cinematicamente lungo i waypoint: la fisica non lo
+  # sposta e nulla lo puo' spingere, ma il robot ci sbatte contro se non lo
+  # evita.
+  #
+  # Percorso: avanti e indietro lungo x=1.5 tra le due pareti laterali, con una
+  # sosta di 2 s a ogni estremo (come chi si ferma a guardare un quadro).
+  #   - taglia il tratto point_left -> point_left_mid (y=-2.8) E il tratto
+  #     point_right_mid -> point_right (y=2.8): due incontri per giro;
+  #   - x=1.5 e' libero da panca (x: 2.02..2.38) e bancone (x: 3.3..3.9);
+  #   - dista >= 0.75 m da ogni posa di scansione, quindi non rende MAI
+  #     irraggiungibile una meta, per quanto si muova — puo' solo obbligare
+  #     il robot a ripianificare e aggirarlo.
+  - name: visitatore_1
+    type: mesh
+    mesh: visitor_male_phone
+    scale: 0.8790                 # 1.7405 m nativi -> 1.53 m
+    position: [1.5, -3.2, 0.0]    # le mesh hanno l'origine ai piedi, non al centro
+    size: [0.20, 0.20, 0.765]     # impronta percettiva: raggio 0.20 m (INVARIATO), alto 1.53 m
+    fixed: true
+    role: person
+    texture: visitor_male_phone.png
+    motion:
+      waypoints: [[1.5, -3.2], [1.5, 3.2]]
+      speed: 0.25                 # m/s, passo tranquillo da visitatore
+      pause: 2.0                  # s di sosta a ogni waypoint
+      loop: false                 # false = avanti e indietro (ping-pong)
+      forward_yaw: 0.0            # questo modello guarda +x da fermo
+
+  # ── Visitatori fermi ──────────────────────────────────────────────────────
+  # Sul tratto parete destra: lascia libero solo il lato interno della sala,
+  # quindi il robot deve scartare verso il centro per superarlo.
+  # Girata verso +y, cioe' verso i quadri p3/p5 della parete destra.
+  - name: visitatore_2
+    type: mesh
+    mesh: visitor_female
+    scale: 0.9047                 # 1.6358 m nativi -> 1.48 m
+    position: [2.2, 2.8, 0.0]
+    orientation: [0.0, 0.0, 3.1416]   # fronte modello -y + yaw pi = guarda +y
+    size: [0.20, 0.20, 0.740]     # impronta percettiva: raggio 0.20 m (INVARIATO), alto 1.48 m
+    fixed: true
+    role: person
+    texture: visitor_female.png
+
+  # Sulla traversata d'ingresso, esattamente sulla retta x=-0.3 che il planner
+  # percorre tra p1 e p2: riempie la striscia centrale +/-15.6 gradi campionata
+  # da _forward_obstacle_distance(), quindi e' visto anche dalla depth camera.
+  # Girato verso -x, cioe' verso i quadri p1/p2 della parete d'ingresso — e col
+  # naso sul telefono, che e' un'ottima ragione per stare in mezzo ai piedi.
+  - name: visitatore_3
+    type: mesh
+    mesh: visitor_male_phone
+    scale: 0.9078                 # 1.7405 m nativi -> 1.58 m
+    position: [-0.3, 0.0, 0.0]
+    orientation: [0.0, 0.0, 3.1416]   # fronte modello +x + yaw pi = guarda -x
+    size: [0.20, 0.20, 0.790]     # impronta percettiva: raggio 0.20 m (INVARIATO), alto 1.58 m
+    fixed: true
+    role: person
+    texture: visitor_male_phone.png
+
+  # ── Secondo visitatore che CAMMINA ────────────────────────────────────────
+  # Gira in tondo nella zona reception, su un anello triangolare:
+  #   (3.0,-1.4) -> (5.4,-1.4) -> (5.4,-2.6) -> e diagonale di ritorno.
+  # Taglia la tratta home (4.8,0) -> point_left (3.0,-2.8) DUE volte per giro:
+  # una sul lato y=-1.4 (nel punto di mezzo della tratta, 3.9,-1.4) e una sulla
+  # diagonale di ritorno. Quella tratta era l'unica del circuito senza alcun
+  # ostacolo, quindi li' l'aggiramento e' interamente merito suo: nessun muro o
+  # mobile contribuisce alla deviazione, che nel caso peggiore passa da 3.33 m
+  # a 4.33 m.
+  #
+  # Percorso scelto anche per quello che NON tocca: >= 0.9 m dal bancone,
+  # >= 1.25 m da ogni posa di scansione, 1.4 m dal robot in posa di reception
+  # e 1.5 m dalla rotta di visitatore_1 — quindi i due camminatori non si
+  # compenetrano mai e nessuno dei due puo' rendere irraggiungibile una meta.
+  # Verificato campionando il prodotto cartesiano delle due rotte contro tutte
+  # e sette le tratte del circuito.
+  #
+  # `loop: true` contro il ping-pong di visitatore_1: con tre waypoint il ciclo
+  # e' un giro vero (non ripercorre la strada a ritroso), cosi' la scena
+  # esercita davvero entrambe le modalita' di rotta di PeopleWalker.h.
+  - name: visitatore_4
+    type: mesh
+    mesh: visitor_female
+    scale: 0.8803                 # 1.6358 m nativi -> 1.44 m
+    position: [3.0, -1.4, 0.0]
+    size: [0.20, 0.20, 0.720]     # impronta percettiva: raggio 0.20 m (INVARIATO), alto 1.44 m
+    fixed: true
+    role: person
+    texture: visitor_female.png
+    motion:
+      waypoints: [[3.0, -1.4], [5.4, -1.4], [5.4, -2.6]]
+      speed: 0.30                 # un filo piu' svelto di visitatore_1
+      pause: 1.5
+      loop: true                  # true = ciclo chiuso; false = ping-pong
+      forward_yaw: -1.5708        # questo modello guarda -y da fermo
+  # Pianta d'angolo, vicino alla parete di fondo — decorativa, fuori da ogni
+  # percorso o linea di vista sui quadri.
+  - name: pianta_vaso
+    type: cylinder
+    position: [5.5, -3.4, 0.15]
+    size: [0.15, 0.15, 0.15]
+    fixed: true
+    rgba: [0.55, 0.30, 0.18, 1.0]
+
+  - name: pianta_fogliame
+    type: sphere
+    position: [5.5, -3.4, 0.45]
+    size: [0.25, 0.25, 0.25]
+    fixed: true
+    rgba: [0.20, 0.45, 0.20, 1.0]
+
+  # ── QUADRI – parete ingresso ───────────────────────────────────────────────
+  # Faccia interna parete a x=-1.4; frame center x=-1.37, canvas center x=-1.33
+  # Dimensioni canvas scalate dai pixel originali (lato maggiore → 1.2 m)
+
+  # Quadro posizione p1 (a sinistra della porta, y=-2.4)
+  # Allestimento RANDOMIZZATO: canvas quadrati uniformi 1.200×1.200 m
+  # (half 0.600) con cornice quadrata uguale per tutte le posizioni.
+  # La texture wall_p1.png è GENERATA da scene_randomizer.py, che sceglie 4
+  # quadri a caso dal catalogo (exchange/data/paintings.yaml) e li adatta al
+  # canvas quadrato con letterboxing. Il registro di cosa è appeso dove è in
+  # exchange/data/scene_ground_truth.yaml.
+  - name: cornice_p1
+    type: box
+    position: [-1.37, -2.4, 1.4]
+    size: [0.03, 0.650, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p1
+    type: mesh
+    mesh: canvas_sq_x
+    position: [-1.33, -2.4, 1.4]
+    fixed: true
+    texture: wall_p1.png
+
+  # Targhetta titolo/artista, generata da scene_randomizer.py insieme al
+  # canvas — sempre coerente col quadro effettivamente appeso in questa
+  # posizione (non è un testo statico).
+  - name: targhetta_p1
+    type: box
+    position: [-1.36, -2.4, 0.65]
+    size: [0.03, 0.15, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p1.png
+
+  # Quadro posizione p2 (a destra della porta, y=2.4)
+  # Canvas quadrato 1.200×1.200 m. Texture generata (vedi p1).
+  - name: cornice_p2
+    type: box
+    position: [-1.37, 2.4, 1.4]
+    size: [0.03, 0.650, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p2
+    type: mesh
+    mesh: canvas_sq_x
+    position: [-1.33, 2.4, 1.4]
+    fixed: true
+    texture: wall_p2.png
+
+  - name: targhetta_p2
+    type: box
+    position: [-1.36, 2.4, 0.65]
+    size: [0.03, 0.15, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p2.png
+
+  # ── QUADRO – parete laterale destra (y=4.0) ───────────────────────────────
+  # Faccia interna a y=3.9; frame center y=3.87, canvas center y=3.83
+
+  # Quadro posizione p3 (x=3.0)
+  # Canvas quadrato 1.200×1.200 m. Texture generata (vedi p1).
+  - name: cornice_p3
+    type: box
+    position: [3.0, 3.87, 1.4]
+    size: [0.650, 0.03, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p3
+    type: mesh
+    mesh: canvas_sq_yneg
+    position: [3.0, 3.83, 1.4]
+    fixed: true
+    texture: wall_p3.png
+
+  - name: targhetta_p3
+    type: box
+    position: [3.0, 3.86, 0.65]
+    size: [0.15, 0.03, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p3.png
+
+  # ── QUADRO – parete laterale sinistra (y=-4.0) ────────────────────────────
+  # Faccia interna a y=-3.9; frame center y=-3.87, canvas center y=-3.83
+
+  # Quadro posizione p4 (x=3.0)
+  # Canvas quadrato 1.200×1.200 m. Texture generata (vedi p1).
+  - name: cornice_p4
+    type: box
+    position: [3.0, -3.87, 1.4]
+    size: [0.650, 0.03, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p4
+    type: mesh
+    mesh: canvas_sq_ypos
+    position: [3.0, -3.83, 1.4]
+    fixed: true
+    texture: wall_p4.png
+
+  - name: targhetta_p4
+    type: box
+    position: [3.0, -3.86, 0.65]
+    size: [0.15, 0.03, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p4.png
+
+  # ── QUADRO – parete laterale destra, posizione intermedia (y=4.0) ────────
+  # A metà tra l'angolo d'ingresso (x=-1.5) e il quadro p3 esistente (x=3.0).
+
+  # Quadro posizione p5 (x=0.75)
+  - name: cornice_p5
+    type: box
+    position: [0.75, 3.87, 1.4]
+    size: [0.650, 0.03, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p5
+    type: mesh
+    mesh: canvas_sq_yneg
+    position: [0.75, 3.83, 1.4]
+    fixed: true
+    texture: wall_p5.png
+
+  - name: targhetta_p5
+    type: box
+    position: [0.75, 3.86, 0.65]
+    size: [0.15, 0.03, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p5.png
+
+  # ── QUADRO – parete laterale sinistra, posizione intermedia (y=-4.0) ─────
+  # A metà tra l'angolo d'ingresso (x=-1.5) e il quadro p4 esistente (x=3.0).
+
+  # Quadro posizione p6 (x=0.75)
+  - name: cornice_p6
+    type: box
+    position: [0.75, -3.87, 1.4]
+    size: [0.650, 0.03, 0.650]
+    fixed: true
+    rgba: [0.72, 0.58, 0.15, 1.0]
+
+  - name: quadro_p6
+    type: mesh
+    mesh: canvas_sq_ypos
+    position: [0.75, -3.83, 1.4]
+    fixed: true
+    texture: wall_p6.png
+
+  - name: targhetta_p6
+    type: box
+    position: [0.75, -3.86, 0.65]
+    size: [0.15, 0.03, 0.05]
+    fixed: true
+    rgba: [1.0, 1.0, 1.0, 1.0]
+    texture: plaque_p6.png

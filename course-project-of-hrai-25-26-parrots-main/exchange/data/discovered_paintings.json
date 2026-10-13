@@ -1,0 +1,149 @@
+{
+  "point_left": {
+    "title": "Liberty Leading the People",
+    "artist": "Eugène Delacroix",
+    "movement": "Romanticism",
+    "mood": [
+      "dramatic",
+      "heroic",
+      "chaotic",
+      "passionate"
+    ],
+    "themes": [
+      "revolution",
+      "freedom",
+      "war",
+      "patriotism"
+    ],
+    "description": "The painting depicts a bare-breasted woman personifying Liberty leading a diverse group of revolutionaries over a barricade strewn with the dead, waving the French tricolor flag amidst a smoky, chaotic battlefield.",
+    "painting_id": "p3",
+    "gesture_id": "point_left",
+    "xyz": [
+      3.085,
+      -3.943,
+      1.5224
+    ]
+  },
+  "point_left_mid": {
+    "title": "The Birth of Venus",
+    "artist": "Sandro Botticelli",
+    "movement": "Renaissance",
+    "mood": [
+      "ethereal",
+      "graceful",
+      "serene",
+      "mythological"
+    ],
+    "themes": [
+      "mythology",
+      "nudity",
+      "nature",
+      "birth"
+    ],
+    "description": "The painting depicts the goddess Venus standing nude on a giant scallop shell as she arrives on shore, while the wind gods Zephyr and Chloris blow her toward land and a female figure waits to cover her with a floral robe.",
+    "painting_id": "p6",
+    "gesture_id": "point_left_mid",
+    "xyz": [
+      0.8607,
+      -3.9776,
+      1.6161
+    ]
+  },
+  "point_front_left": {
+    "title": "The Scream",
+    "artist": "Edvard Munch",
+    "movement": "Expressionism",
+    "mood": [
+      "anxiety",
+      "despair",
+      "anguish",
+      "distorted"
+    ],
+    "themes": [
+      "human emotion",
+      "alienation",
+      "existential dread"
+    ],
+    "description": "A distorted, skull-like figure stands on a bridge with hands to its face in a gesture of agony, set against a swirling, blood-red sky.",
+    "painting_id": "p4",
+    "gesture_id": "point_front_left",
+    "xyz": [
+      -1.4726,
+      -2.4872,
+      1.6248
+    ]
+  },
+  "point_front_right": {
+    "title": "Water Lilies",
+    "artist": "Claude Monet",
+    "movement": "Impressionism",
+    "mood": [
+      "calm",
+      "serene",
+      "dreamy",
+      "reflective"
+    ],
+    "themes": [
+      "nature",
+      "water",
+      "botanicals",
+      "light"
+    ],
+    "description": "The painting depicts a tranquil pond surface filled with floating green lily pads and soft pink flowers, rendered in loose, shimmering brushstrokes of blue and green.",
+    "painting_id": "p1",
+    "gesture_id": "point_front_right",
+    "xyz": [
+      -1.4465,
+      2.2918,
+      1.5023
+    ]
+  },
+  "point_right_mid": {
+    "title": "Las Meninas",
+    "artist": "Diego Velázquez",
+    "movement": "Baroque",
+    "mood": [
+      "mysterious",
+      "contemplative",
+      "dramatic",
+      "solemn"
+    ],
+    "themes": [
+      "royalty",
+      "court life",
+      "art and perception",
+      "family"
+    ],
+    "description": "The painting depicts a complex scene in the royal court of Spain, featuring the young Infanta Margarita surrounded by her maids of honor, dwarfs, and a dog, with the artist himself visible at his easel in the foreground.",
+    "painting_id": "p2",
+    "gesture_id": "point_right_mid",
+    "xyz": [
+      0.6295,
+      3.95,
+      1.4933
+    ]
+  },
+  "point_right": {
+    "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+    "artist": "Georges Seurat",
+    "movement": "Pointillism",
+    "mood": [
+      "leisurely",
+      "serene",
+      "contemplative"
+    ],
+    "themes": [
+      "leisure",
+      "nature",
+      "society"
+    ],
+    "description": "The painting depicts a group of people relaxing on a grassy bank by a river, rendered in a distinctive style of small, distinct dots of color.",
+    "painting_id": "p7",
+    "gesture_id": "point_right",
+    "xyz": [
+      2.9234,
+      3.9684,
+      1.6211
+    ]
+  }
+}

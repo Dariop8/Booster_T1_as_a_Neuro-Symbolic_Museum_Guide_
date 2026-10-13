@@ -1,0 +1,84 @@
+{
+  "domain": "planning_control",
+  "source": "robot scan (discovered_paintings.json), world->base via fixed home pose",
+  "n_targets": 6,
+  "n_repeats_per_target": 5,
+  "accuracy_mean_residual_cm": 2.2,
+  "accuracy_max_residual_cm": 3.65,
+  "robustness_converged_rate": 1.0,
+  "efficiency_mean_solve_time_ms": 4.533,
+  "per_target": [
+    {
+      "gesture": "point_front_left",
+      "target_xyz": [
+        5.2653,
+        1.9749000000000008,
+        0.8273999999999999
+      ],
+      "arm": "left",
+      "mean_residual_cm": 0.73,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.93
+    },
+    {
+      "gesture": "point_front_right",
+      "target_xyz": [
+        5.2627,
+        -1.8216999999999994,
+        0.8156999999999999
+      ],
+      "arm": "right",
+      "mean_residual_cm": 0.61,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.52
+    },
+    {
+      "gesture": "point_left",
+      "target_xyz": [
+        1.1838999999999995,
+        2.9491,
+        0.7915999999999999
+      ],
+      "arm": "left",
+      "mean_residual_cm": 3.65,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.45
+    },
+    {
+      "gesture": "point_left_mid",
+      "target_xyz": [
+        3.1294999999999993,
+        2.9649000000000005,
+        0.7758
+      ],
+      "arm": "left",
+      "mean_residual_cm": 2.42,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.45
+    },
+    {
+      "gesture": "point_right",
+      "target_xyz": [
+        1.4326000000000003,
+        -2.9681,
+        0.8026
+      ],
+      "arm": "right",
+      "mean_residual_cm": 3.5,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.53
+    },
+    {
+      "gesture": "point_right_mid",
+      "target_xyz": [
+        3.3186000000000004,
+        -2.9696999999999996,
+        0.7894999999999999
+      ],
+      "arm": "right",
+      "mean_residual_cm": 2.31,
+      "converged_rate": 1.0,
+      "mean_solve_time_ms": 4.32
+    }
+  ]
+}

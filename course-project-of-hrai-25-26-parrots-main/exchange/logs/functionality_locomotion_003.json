@@ -1,0 +1,57 @@
+{
+  "domain": "control_locomotion",
+  "n_goals": 4,
+  "waypoint_tolerance_m": 0.15,
+  "heading_tolerance_rad": 0.1,
+  "robustness_success_rate": 1.0,
+  "accuracy_mean_position_error_cm": 9.9,
+  "accuracy_mean_heading_error_rad": 0.053,
+  "efficiency_mean_time_s": 37.1,
+  "efficiency_mean_path_ratio": 1.07,
+  "per_goal": [
+    {
+      "name": "short_open",
+      "description": "Short hop in open space near spawn — baseline, no obstacles nearby.",
+      "reached": true,
+      "position_error_cm": 10.2,
+      "heading_error_rad": null,
+      "elapsed_s": 27.7,
+      "straight_line_m": 1.21,
+      "planned_path_m": 1.36,
+      "path_ratio": 1.13
+    },
+    {
+      "name": "long_cross_room",
+      "description": "Long walk across most of the room (spawn to the far entrance wall).",
+      "reached": true,
+      "position_error_cm": 12.1,
+      "heading_error_rad": null,
+      "elapsed_s": 42.7,
+      "straight_line_m": 3.55,
+      "planned_path_m": 3.81,
+      "path_ratio": 1.07
+    },
+    {
+      "name": "obstacle_avoidance",
+      "description": "Forces a route around the reception desk/bench cluster blocking the direct line.",
+      "reached": true,
+      "position_error_cm": 12.5,
+      "heading_error_rad": null,
+      "elapsed_s": 47.8,
+      "straight_line_m": 3.8,
+      "planned_path_m": 3.99,
+      "path_ratio": 1.05
+    },
+    {
+      "name": "pose_with_heading",
+      "description": "Tests navigate_to_pose()'s final turn-in-place — position AND facing direction both matter here.",
+      "reached": true,
+      "position_error_cm": 4.7,
+      "heading_error_rad": 0.053,
+      "elapsed_s": 30.3,
+      "straight_line_m": 2.05,
+      "planned_path_m": 2.09,
+      "path_ratio": 1.02
+    }
+  ]
+}

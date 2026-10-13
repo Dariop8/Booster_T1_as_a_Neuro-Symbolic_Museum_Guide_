@@ -1,0 +1,42 @@
+{
+  "user_text": "Still not what I had in mind. One more colorful please.",
+  "user_model": {
+    "profile": "expert",
+    "interests": {
+      "emotion": 0.68,
+      "color": 0.8
+    },
+    "available_time": "short",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_front_right",
+    "explanation_key": "short"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "I recommend Monet’s \"Water Lilies\" for its immediate, immersive play of light and color. Notice how the violet and green reflections dissolve the horizon, creating a pure visual vibration.",
+    "follow_up": "Did the luminous, atmospheric palette of Monet's \"Water Lilies\" capture your interest, or would you prefer to examine another work?"
+  }
+}

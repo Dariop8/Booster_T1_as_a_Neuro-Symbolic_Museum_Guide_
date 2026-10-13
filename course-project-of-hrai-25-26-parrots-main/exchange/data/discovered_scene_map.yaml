@@ -1,0 +1,57 @@
+scene:
+  id: museum_room_1
+  name: Museum Room (derived from placement)
+  walls:
+  - id: left_wall
+    description: wall at yaw≈+1.13 rad
+  - id: front_wall
+    description: wall at yaw≈+0.37 rad
+  - id: right_wall
+    description: wall at yaw≈-0.76 rad
+  objects:
+  - id: p3
+    type: painting
+    wall: left_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      left_of: p6
+  - id: p6
+    type: painting
+    wall: left_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      right_of: p3
+      left_of: p4
+  - id: p4
+    type: painting
+    wall: front_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      right_of: p6
+      left_of: p1
+  - id: p1
+    type: painting
+    wall: front_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      right_of: p4
+      left_of: p2
+  - id: p2
+    type: painting
+    wall: right_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      right_of: p1
+      left_of: p7
+  - id: p7
+    type: painting
+    wall: right_wall
+    relations:
+      visible_from_robot: true
+      visible_from_visitor: true
+      right_of: p2

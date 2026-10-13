@@ -1,0 +1,47 @@
+{
+  "user_text": "vorrei vedere un quadro",
+  "user_model": {
+    "profile": "child",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "tell_story",
+      "point_gesture",
+      "simple_question"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "child"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "candidate_scores": {
+    "p1": 2,
+    "p8": 2,
+    "p6": 0,
+    "p3": 0,
+    "p4": 2,
+    "p7": 2
+  },
+  "robot_messages": {
+    "main": "Vorrei mostrarti un quadro molto bello, si chiama \"Water Lilies\" di Claude Monet, è proprio a sinistra del \"Sunflower Field with Cypresses\". Guarda tutte quelle bellissime ninfee! Monet ha dipinto questo stagno molte volte perché amava vedere come la luce cambiava i colori ogni giorno, può sembrare magico, no? Puoi vedere i riflessi nell'acqua, è come se il quadro si muovesse, e noterai che i colori sono molto morbidi e soffusi, questo è lo stile impressionista di Monet, che cerca di catturare l'atmosfera e l'emozione del momento. Il blu, il verde e il violetto sono i colori principali di questo quadro, non trovi che siano molto belli insieme?",
+    "follow_up": "Ti è piaciuto il quadro \"Water Lilies\" o vuoi sapere qualcosa in più su di esso?"
+  }
+}

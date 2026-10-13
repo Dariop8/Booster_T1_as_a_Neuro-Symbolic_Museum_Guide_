@@ -1,0 +1,42 @@
+{
+  "user_text": "Still, not what I had in mind. One more colorful, please.",
+  "user_model": {
+    "profile": "expert",
+    "interests": {
+      "emotion": 0.68,
+      "color": 0.8
+    },
+    "available_time": "short",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_front_right",
+    "explanation_key": "short"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "Observe Monet’s \"Water Lilies.\" Its iconic interplay of blue, green, and violet captures light’s fleeting impression instantly. Notice how the water’s surface dissolves into pure, shimmering color.",
+    "follow_up": "Does the chromatic resonance in Monet's \"Water Lilies\" satisfy your interest, or would you prefer to explore another masterpiece?"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "input_mode": "text",
+  "duration_s": 52.7,
+  "turns": 3,
+  "clarification_count": 0,
+  "paintings_shown": 2,
+  "final_user_model": {
+    "profile": "novice",
+    "interests": {
+      "color": 0.8
+    },
+    "available_time": "unknown",
+    "preferred_mood": "serene",
+    "preferred_mood_source": "text",
+    "language": "it",
+    "role": "visitor"
+  }
+}

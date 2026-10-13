@@ -1,0 +1,18 @@
+{
+  "input_mode": "text",
+  "duration_s": 9.3,
+  "turns": 3,
+  "clarification_count": 0,
+  "paintings_shown": 1,
+  "final_user_model": {
+    "profile": "unknown",
+    "interests": {
+      "emotion": 0.45
+    },
+    "available_time": "unknown",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "it",
+    "role": "visitor"
+  }
+}

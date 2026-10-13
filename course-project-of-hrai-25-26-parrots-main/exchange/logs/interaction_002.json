@@ -1,0 +1,47 @@
+{
+  "user_text": "ciao, vorrei vedere un quadro",
+  "user_model": {
+    "profile": "novice",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "novice"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": false,
+  "candidate_scores": {
+    "p1": 2,
+    "p8": 2,
+    "p6": 2,
+    "p3": 2,
+    "p4": 2,
+    "p7": 2
+  },
+  "robot_messages": {
+    "main": "Ciao, sono felice di aiutarti a scoprire un capolavoro di nostra collezione, ti consiglio di dare uno sguardo a \"Water Lilies\" di Claude Monet, un quadro che troverai immediatamente bello e coinvolgente. Monet non cercava di riprodurre il laghetto con precisione fotografica, ma di catturare l'essenza della luce e del colore sull'acqua in un momento specifico, creando un'atmosfera unica e suggestiva. Questo dipinto, che si trova alla sinistra di \"Sunflower Field with Cypresses\", è un esempio perfetto dell'impressionismo, con i suoi colori blu, verdi e viola che sembrano danzare sulla tela, creando un effetto di movimento e di vita. La tecnica pittorica di Monet, con pennellate rapide e spontanee, aggiunge un tocco di freschezza e di immediatezza al quadro, rendendolo ancora più affascinante e degno di essere ammirato. Il quadro \"Water Lilies\" si trova alla tua sinistra, proprio accanto a \"Sunflower Field with Cypresses\".",
+    "follow_up": "Ti è piaciuto \"Water Lilies\" o vorresti saperne di più su questo quadro o vedere un'altra opera?"
+  }
+}

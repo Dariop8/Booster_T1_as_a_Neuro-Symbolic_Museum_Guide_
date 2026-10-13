@@ -1,0 +1,100 @@
+scene:
+  id: museum_room_1
+  name: "Small Museum Room"
+  reference_frame: "world"
+
+  robot:
+    id: booster_t1
+    pose:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      yaw: 0.0
+    default_interaction_zone: "social_space"
+
+  visitor:
+    expected_pose:
+      x: 1.5
+      y: 0.0
+      z: 0.0
+      yaw: 3.14
+    interaction_distance_m: 1.5
+
+  # Layout from the robot's point of view, left to right:
+  #   left_wall (p4, Munch) -> front_wall/left (p1, Monet) -> front_wall/right (p2, Las Meninas) -> right_wall (p3, Delacroix)
+  walls:
+    - id: left_wall
+      description: "left side wall, immediately to the robot's left"
+      position:
+        x: 1.5
+        y: 1.8
+        z: 1.5
+
+    - id: front_wall
+      description: "main wall in front of the robot"
+      position:
+        x: 2.5
+        y: 0.0
+        z: 1.5
+
+    - id: right_wall
+      description: "right side wall, immediately to the robot's right"
+      position:
+        x: 1.5
+        y: -1.8
+        z: 1.5
+
+  objects:
+    - id: p4
+      type: painting
+      wall: left_wall
+      position_label: left_wall
+      pose:
+        x: 1.5
+        y: 1.8
+        z: 1.5
+      relations:
+        left_of: p1
+        visible_from_robot: true
+        visible_from_visitor: true
+
+    - id: p1
+      type: painting
+      wall: front_wall
+      position_label: left
+      pose:
+        x: 2.5
+        y: 0.8
+        z: 1.5
+      relations:
+        right_of: p4
+        left_of: p2
+        visible_from_robot: true
+        visible_from_visitor: true
+
+    - id: p2
+      type: painting
+      wall: front_wall
+      position_label: right
+      pose:
+        x: 2.5
+        y: -0.8
+        z: 1.5
+      relations:
+        right_of: p1
+        left_of: p3
+        visible_from_robot: true
+        visible_from_visitor: true
+
+    - id: p3
+      type: painting
+      wall: right_wall
+      position_label: right_wall
+      pose:
+        x: 1.5
+        y: -1.8
+        z: 1.5
+      relations:
+        right_of: p2
+        visible_from_robot: true
+        visible_from_visitor: true

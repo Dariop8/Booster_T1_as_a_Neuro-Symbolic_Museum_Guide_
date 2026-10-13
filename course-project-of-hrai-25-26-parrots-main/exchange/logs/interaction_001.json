@@ -1,0 +1,47 @@
+{
+  "user_text": "ciao, vorrei vedere un quadro",
+  "user_model": {
+    "profile": "novice",
+    "interests": {},
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "novice"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "candidate_scores": {
+    "p1": 2,
+    "p8": 2,
+    "p6": 2,
+    "p3": 2,
+    "p4": 2,
+    "p7": 2
+  },
+  "robot_messages": {
+    "main": "Ciao, sono felice di consigliarti un quadro che penso ti piacerà molto, \"Water Lilies\" di Claude Monet, un capolavoro dell'impressionismo. Lo consiglio perché è immediatamente bello, Monet non ha cercato di dipingere il laghetto esattamente com'era, ma di catturare la sensazione della luce e del colore sull'acqua in un momento specifico, creando un'atmosfera unica e suggestiva. Questo quadro, che si trova a sinistra di \"Sunflower Field with Cypresses\", è caratterizzato da una palette di colori dominati dal blu, dal verde e dal violetto, che sembrano danzare sulla tela, creando un effetto di movimento e di profondità, tipico dello stile impressionista di Monet. La sua tecnica pittorica, con pennellate rapide e spontanee, ha reso possibile catturare la fugacità della luce e del colore, donando al quadro una sensazione di freschezza e di immediatezza.",
+    "follow_up": "Ti è piaciuto il quadro \"Water Lilies\" o desideri saperne di più su di esso?"
+  }
+}

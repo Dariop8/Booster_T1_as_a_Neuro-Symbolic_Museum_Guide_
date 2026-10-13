@@ -1,0 +1,40 @@
+scene_ground_truth:
+  generated_at: '2026-09-11T09:27:46+00:00'
+  seed: null
+  hanging:
+  - position: p1
+    wall: entrance_wall_left
+    gesture: point_front_left
+    painting_id: p4
+    title: The Scream
+    artist: Edvard Munch
+  - position: p2
+    wall: entrance_wall_right
+    gesture: point_front_right
+    painting_id: p1
+    title: Water Lilies
+    artist: Claude Monet
+  - position: p3
+    wall: right_side_wall
+    gesture: point_right
+    painting_id: p7
+    title: A Sunday Afternoon on the Island of La Grande Jatte
+    artist: Georges Seurat
+  - position: p4
+    wall: left_side_wall
+    gesture: point_left
+    painting_id: p3
+    title: Liberty Leading the People
+    artist: Eugène Delacroix
+  - position: p5
+    wall: right_side_wall_mid
+    gesture: point_right_mid
+    painting_id: p2
+    title: Las Meninas
+    artist: Diego Velázquez
+  - position: p6
+    wall: left_side_wall_mid
+    gesture: point_left_mid
+    painting_id: p6
+    title: The Birth of Venus
+    artist: Sandro Botticelli

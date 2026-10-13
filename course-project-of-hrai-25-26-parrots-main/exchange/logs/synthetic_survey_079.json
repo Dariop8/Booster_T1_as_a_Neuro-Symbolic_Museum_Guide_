@@ -1,0 +1,22 @@
+{
+  "synthetic": true,
+  "illustrative_atscale": true,
+  "generated_by": "illustrative (hand-authored, jittered around the mean of 3 real LLM-roleplay data points for this condition — NOT individual LLM roleplay calls)",
+  "godspeed_ratings": {
+    "anthropomorphism": 2,
+    "animacy": 4,
+    "likeability": 4,
+    "perceived_intelligence": 2,
+    "perceived_safety": 3
+  },
+  "independent_variables": {
+    "hypothesis": "H2",
+    "condition": "explicit",
+    "persona": "turista_di_fretta"
+  },
+  "session_covariates": {
+    "clarification_count": 0,
+    "paintings_shown": 1,
+    "final_profile": "novice"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "n_repeats": 3,
+  "completion_rate": 1.0,
+  "mean_wall_s": 236.4,
+  "mean_classification_accuracy": 1.0,
+  "mean_scene_graph_wall_accuracy": 1.0,
+  "mean_return_to_home_error_m": 0.0787,
+  "runs": [
+    {
+      "completed_full_circuit": true,
+      "failed_directions": [],
+      "wall_s": 239.3,
+      "classification_accuracy": 1.0,
+      "scene_graph_wall_accuracy": 1.0,
+      "return_to_home_error_m": 0.0851
+    },
+    {
+      "completed_full_circuit": true,
+      "failed_directions": [],
+      "wall_s": 235.1,
+      "classification_accuracy": 1.0,
+      "scene_graph_wall_accuracy": 1.0,
+      "return_to_home_error_m": 0.0791
+    },
+    {
+      "completed_full_circuit": true,
+      "failed_directions": [],
+      "wall_s": 234.8,
+      "classification_accuracy": 1.0,
+      "scene_graph_wall_accuracy": 1.0,
+      "return_to_home_error_m": 0.0719
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "user_text": "un quadro colorato per favore",
+  "user_model": {
+    "profile": "unknown",
+    "interests": {
+      "color": 0.5
+    },
+    "available_time": "unknown",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p1",
+    "title": "Water Lilies",
+    "htn_plan": [
+      "standard_explanation",
+      "point_gesture",
+      "satisfaction_check"
+    ],
+    "pointing_skill": "point_front_right",
+    "explanation_key": "novice"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": false,
+  "robot_messages": {
+    "main": "Per soddisfare la tua ricerca di colore, ti consiglio vivamente di osservare \"Nenofili\" di Claude Monet, situato proprio alla sinistra de \"Las Meninas\". Ti suggerisco quest'opera perché è immediatamente affascinante: Monet non cercava di dipingere lo stagno così come appariva fisicamente, ma voleva catturare la sensazione della luce e del colore sull'acqua in un momento preciso. L'artista ha utilizzato una palette dominata da blu, verdi e viola per creare un'atmosfera vibrante e riflessiva, trasformando la natura in un'esperienza emotiva pura attraverso la tecnica impressionista. Troverete \"Le Ninfee\" proprio alla sinistra de \"Las Meninas\".",
+    "follow_up": "Ti è piaciuto l'effetto vibrante di \"Ninfee\" di Monet, o preferiresti scoprire un altro capolavoro?"
+  }
+}

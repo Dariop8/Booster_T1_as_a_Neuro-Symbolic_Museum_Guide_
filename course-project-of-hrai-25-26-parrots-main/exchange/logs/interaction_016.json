@@ -1,0 +1,41 @@
+{
+  "user_text": "mi piace l impressionismo, ho poco tempo",
+  "user_model": {
+    "profile": "tourist_short_time",
+    "interests": {
+      "technique": 0.8
+    },
+    "available_time": "short",
+    "preferred_mood": "unknown",
+    "preferred_mood_source": null,
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p7",
+    "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_right",
+    "explanation_key": "short"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": false,
+  "robot_messages": {
+    "main": "Guarda \"A Sunday Afternoon on the Island of La Grande Jatte\" di Seurat: i minuscoli puntini di colore si fondono magicamente cambiando con la distanza. Un'esplosione di verde, blu e giallo che sfida la percezione. You'll find it to the right of \"Las Meninas\".",
+    "follow_up": "Did you enjoy \"A Sunday Afternoon on the Island of La Grande Jatte\"? Would you like to know more or see another one?"
+  }
+}

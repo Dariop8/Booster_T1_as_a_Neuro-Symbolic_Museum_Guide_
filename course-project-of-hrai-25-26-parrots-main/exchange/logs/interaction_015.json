@@ -1,0 +1,41 @@
+{
+  "user_text": "i colori",
+  "user_model": {
+    "profile": "child",
+    "interests": {
+      "color": 0.8
+    },
+    "available_time": "unknown",
+    "preferred_mood": "contemplative",
+    "preferred_mood_source": "face",
+    "language": "it",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p7",
+    "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+    "htn_plan": [
+      "tell_story",
+      "point_gesture",
+      "simple_question"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "child"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "Ti consiglio di guardare \"Una domenica pomeriggio sull'isola della Grande Jatte\", che si trova proprio a sinistra del campo di girasoli. Se ti avvicini moltissimo, scoprirai che il quadro è fatto di migliaia di puntini minuscoli! Seurat ha messo i colori uno accanto all'altro invece di mescolarli. Se fai un passo indietro, i puntini si trasformano magicamente in persone che passeggiano nel parco. È un gioco di colori verde, blu e giallo che sembra vibrare agli occhi.",
+    "follow_up": "Ti è piaciuto \"Un pomeriggio domenicale sull'isola della Grande Jatte\"?"
+  }
+}

@@ -1,0 +1,437 @@
+# Museum painting CATALOG.
+#
+# This file lists every painting the museum owns — NOT what is currently on
+# the walls. Which 4 paintings are actually hung (and where) is decided by
+# scene_randomizer.py at scene-generation time and discovered by the robot's
+# own camera scan (museum_explorer.py). For this reason entries here carry no
+# wall/position/pointing information: placement-dependent data lives in
+# exchange/data/scene_ground_truth.yaml (curator registry, written by the
+# randomizer) and exchange/data/discovered_paintings.json (robot scan).
+#
+# `texture` is the file in circus/resources/textures/ used by the randomizer.
+
+paintings:
+  - id: p1
+    title: "Water Lilies"
+    artist: "Claude Monet"
+    year: 1906
+    style: "impressionism"
+    texture: monet.png
+    mood:
+      - serene
+      - peaceful
+      - contemplative
+    related_to:
+      - p4
+      - p7
+    themes:
+      - color
+      - nature
+      - emotion
+      - abstraction
+    visual_features:
+      dominant_colors:
+        - blue
+        - green
+        - violet
+      brightness: high
+      complexity: medium
+    suitable_for:
+      - child
+      - novice
+      - tourist_short_time
+      - color_interest
+      - nature_interest
+      - emotion_interest
+    difficulty: easy
+    estimated_explanation_time_sec:
+      short: 20
+      normal: 45
+      detailed: 90
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "Look at all those water flowers! Monet painted this pond over and over because he loved how the light changed the colors every day. Can you see the reflections in the water?"
+      novice: "I recommend this painting because it is immediately beautiful. Monet was not trying to paint the pond exactly as it looked — he was capturing the feeling of light and color on the water at a specific moment."
+      expert: "This work is central to understanding Monet's late Impressionist dissolving of form: the motif becomes a pretext for an almost abstract exploration of chromatic vibration and optical perception."
+      short: "This is one of Monet's most iconic works — the colors and light make an immediate impression even if you only have a few minutes."
+      emotional: "Standing before the Water Lilies feels like stepping into a moment of perfect stillness. The colors merge like a memory of a place you may never have visited, yet somehow already know."
+
+  - id: p2
+    title: "Las Meninas"
+    artist: "Diego Velázquez"
+    year: 1656
+    style: "baroque"
+    texture: velazquez.png
+    mood:
+      - mysterious
+      - contemplative
+    related_to:
+      - p3
+      - p9
+    themes:
+      - technique
+      - composition
+      - history
+      - identity
+    visual_features:
+      dominant_colors:
+        - brown
+        - silver
+        - black
+        - gold
+      brightness: medium
+      complexity: high
+    suitable_for:
+      - novice
+      - expert
+      - technique_interest
+      - history_interest
+    difficulty: medium
+    estimated_explanation_time_sec:
+      short: 30
+      normal: 75
+      detailed: 150
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "This painting is like a puzzle! The painter painted himself while painting. Can you find the mirror in the background? And who do you think he was really painting?"
+      novice: "This is considered one of the greatest paintings ever made. Velázquez put himself in the picture — you can see him on the left. But the real mystery is: who is he painting? The answer is surprising."
+      expert: "Las Meninas is a masterwork of perspectival ambiguity and self-referentiality. The viewer is implicitly positioned as the subject of the painting, collapsing the boundary between observer and scene in a way that anticipates modern theories of the gaze."
+      short: "This is one of the most analyzed paintings in history. In just a glance you'll notice the layers of composition and the painter himself appearing within the scene."
+      emotional: "There is a strange intimacy to this painting — as though you have been caught entering a room. Velázquez looks straight at you, brush in hand, and for a moment you feel you are the one being painted."
+
+  - id: p3
+    title: "Liberty Leading the People"
+    artist: "Eugène Delacroix"
+    year: 1830
+    style: "romanticism"
+    texture: delacroix.png
+    mood:
+      - dramatic
+      - dynamic
+      - energetic
+    related_to:
+      - p2
+    themes:
+      - history
+      - politics
+      - emotion
+      - drama
+    visual_features:
+      dominant_colors:
+        - red
+        - blue
+        - white
+        - brown
+      brightness: medium
+      complexity: high
+    suitable_for:
+      - novice
+      - expert
+      - history_interest
+      - emotion_interest
+    difficulty: medium
+    estimated_explanation_time_sec:
+      short: 25
+      normal: 60
+      detailed: 120
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "This painting shows people fighting for their freedom. The woman in the middle holding the flag is called Liberty — she represents an idea, not a real person. It looks like a very dramatic moment, doesn't it?"
+      novice: "This painting shows the French Revolution of 1830. Delacroix painted Liberty as a powerful woman leading the people forward. It is full of movement and emotion — you can almost hear the noise of the crowd."
+      expert: "Delacroix combines documentary realism with allegory in a deliberately uncomfortable way: the idealized figure of Liberty moves among corpses and smoke, making the viewer confront the violence that underlies political transformation."
+      short: "This is a powerful image of revolution — recognizable even if you have only a few seconds. The drama and movement pull you in immediately."
+      emotional: "The painting does not let you stay neutral. The chaos, the bodies on the ground, the woman charging forward with the flag — you feel the urgency of it, a collective moment of fury and hope pressed into a single frame."
+
+  - id: p4
+    title: "The Scream"
+    artist: "Edvard Munch"
+    year: 1893
+    style: "expressionism"
+    texture: munch.png
+    mood:
+      - dramatic
+      - mysterious
+    related_to:
+      - p1
+      - p5
+    themes:
+      - emotion
+      - anxiety
+      - psychology
+      - nature
+    visual_features:
+      dominant_colors:
+        - orange
+        - red
+        - blue
+        - black
+      brightness: medium
+      complexity: medium
+    suitable_for:
+      - child
+      - novice
+      - expert
+      - emotion_interest
+    difficulty: easy
+    estimated_explanation_time_sec:
+      short: 20
+      normal: 50
+      detailed: 100
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "This figure looks very scared! Munch painted this because one evening the sky turned orange and red and he felt a huge wave of anxiety. Have you ever felt something like that?"
+      novice: "The Scream is one of the most recognizable images in the world. Munch painted it to express an overwhelming feeling of anxiety he experienced — not a scary event outside, but a feeling from inside."
+      expert: "This work is a founding document of Expressionism: Munch dissolves landscape and figure into a unified field of psychological projection, where the distorted sky and water mirror the internal state of the subject rather than any observed reality."
+      short: "One of the most iconic images in art history — The Scream communicates its emotion in an instant, no explanation needed."
+      emotional: "The figure in The Scream is not frightened by something it sees — it is frightened by its own feeling. The painting captures that moment when anxiety overwhelms you from the inside, and the whole world seems to vibrate with it."
+
+  - id: p5
+    title: "The Persistence of Memory"
+    artist: "Salvador Dalí"
+    year: 1931
+    style: "surrealism"
+    texture: dali.png
+    mood:
+      - mysterious
+      - contemplative
+      - dreamlike
+    related_to:
+      - p4
+    themes:
+      - abstraction
+      - psychology
+      - time
+      - emotion
+    visual_features:
+      dominant_colors:
+        - brown
+        - blue
+        - orange
+      brightness: medium
+      complexity: medium
+    suitable_for:
+      - child
+      - novice
+      - expert
+      - abstraction_interest
+      - emotion_interest
+    difficulty: medium
+    estimated_explanation_time_sec:
+      short: 20
+      normal: 55
+      detailed: 110
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "Look, the clocks are melting like cheese in the sun! Dalí loved painting dreams, where strange things feel normal. What do you think a melting clock means?"
+      novice: "This is Dalí's most famous work. The soft, melting clocks suggest that time in dreams — and in memory — does not run the way clocks say it does. Everything is painted with almost photographic precision, which makes the strangeness even stronger."
+      expert: "Dalí applies what he called the 'paranoiac-critical method': rendering irrational dream content with meticulous academic technique. The soft watches have been read through Einstein's relativity and through Freud, but Dalí himself pointed to a melting Camembert — the ambiguity is the point."
+      short: "The melting clocks are one of the most famous images of the 20th century — an instantly striking vision of dream-time."
+      emotional: "There is a silence in this landscape that feels like the moment just after waking, when the dream is still more real than the room around you and time has not yet started moving again."
+
+  - id: p6
+    title: "The Birth of Venus"
+    artist: "Sandro Botticelli"
+    year: 1486
+    style: "renaissance"
+    texture: botticelli.png
+    mood:
+      - serene
+      - sublime
+    related_to:
+      - p2
+    themes:
+      - history
+      - mythology
+      - beauty
+      - nature
+    visual_features:
+      dominant_colors:
+        - green
+        - pink
+        - blue
+      brightness: high
+      complexity: high
+    suitable_for:
+      - novice
+      - expert
+      - history_interest
+      - nature_interest
+    difficulty: medium
+    estimated_explanation_time_sec:
+      short: 25
+      normal: 65
+      detailed: 130
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "This is Venus, a goddess from very old stories, arriving on a giant seashell! The wind spirits on the left are blowing her to the shore. Can you see the flowers flying in the air?"
+      novice: "Botticelli painted the goddess Venus arriving from the sea on a shell, blown by the winds. It was one of the first large paintings of a mythological scene since antiquity — a symbol of the Renaissance rediscovering the classical world."
+      expert: "The Birth of Venus reconciles Neoplatonic philosophy with classical iconography: Venus stands in a contrapposto derived from the Venus Pudica type, while the linear rhythm of drapery and hair privileges ideal contour over naturalistic volume — grace over gravity."
+      short: "One of the defining images of the Renaissance — Venus arriving on her shell is recognizable at a glance and worth even a short stop."
+      emotional: "Everything in this painting floats — the shell, the roses, the hair in the wind. It feels like witnessing something both fragile and eternal arriving at the shore for the first time."
+
+  - id: p7
+    title: "A Sunday Afternoon on the Island of La Grande Jatte"
+    artist: "Georges Seurat"
+    year: 1886
+    style: "pointillism"
+    texture: seurat.png
+    mood:
+      - peaceful
+      - serene
+      - contemplative
+    related_to:
+      - p1
+      - p8
+    themes:
+      - technique
+      - color
+      - nature
+      - daily_life
+    visual_features:
+      dominant_colors:
+        - green
+        - blue
+        - yellow
+      brightness: high
+      complexity: high
+    suitable_for:
+      - child
+      - novice
+      - expert
+      - technique_interest
+      - color_interest
+      - nature_interest
+    difficulty: medium
+    estimated_explanation_time_sec:
+      short: 25
+      normal: 60
+      detailed: 120
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "If you get very close, this painting is made of thousands and thousands of tiny dots! Seurat put the colors next to each other instead of mixing them. Step back and the dots turn into people in a park!"
+      novice: "Seurat painted this entire scene with tiny dots of pure color — a technique called pointillism. Up close it looks abstract, but from a distance your eye mixes the dots into a calm Sunday in a Paris park. It took him about two years."
+      expert: "La Grande Jatte is the manifesto of Neo-Impressionism: Seurat replaces the Impressionist gesture with a quasi-scientific divisionism grounded in Chevreul's color theory, freezing modern leisure into a hieratic, almost Egyptian monumentality."
+      short: "Made entirely of tiny dots of color — step closer and further and watch the painting change. A quick look is genuinely fun."
+      emotional: "There is something dreamlike in how still everyone stands — a warm Sunday afternoon suspended forever, as if the whole park were holding its breath."
+
+  - id: p8
+    title: "Sunflower Field with Cypresses"
+    artist: "Vincent van Gogh (style)"
+    year: 1889
+    style: "post-impressionism"
+    texture: vangogh_sunflowers.png
+    mood:
+      - dynamic
+      - energetic
+      - serene
+    related_to:
+      - p7
+      - p1
+    themes:
+      - color
+      - nature
+      - emotion
+    visual_features:
+      dominant_colors:
+        - yellow
+        - blue
+        - green
+      brightness: high
+      complexity: medium
+    suitable_for:
+      - child
+      - novice
+      - tourist_short_time
+      - color_interest
+      - nature_interest
+    difficulty: easy
+    estimated_explanation_time_sec:
+      short: 20
+      normal: 45
+      detailed: 90
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "A whole field of sunflowers! Look how the sky swirls like the wind is dancing. Van Gogh painted with thick, wavy brushstrokes — can you see them moving?"
+      novice: "This canvas in Van Gogh's style brings together his favorite subjects: sunflowers, cypresses and a swirling sky. The thick, energetic brushstrokes make the whole landscape feel alive and in motion."
+      expert: "The work synthesizes Van Gogh's Provençal vocabulary — the flame-like cypress, impasto sunflowers and turbulent sky of the Saint-Rémy period — into a single composition, illustrating how his expressive brushwork turns landscape into emotional autobiography."
+      short: "A field of sunflowers under a swirling sky — pure Van Gogh energy, readable in a single glance."
+      emotional: "The sunflowers push toward you like a crowd of small suns, and the sky above them refuses to stay still. It is a landscape that feels the way joy feels — slightly overwhelming, impossible to hold."
+
+  - id: p9
+    title: "Girl with a Pearl Earring"
+    artist: "Johannes Vermeer"
+    year: 1665
+    style: "baroque"
+    texture: vermeer.png
+    mood:
+      - mysterious
+      - serene
+      - contemplative
+    related_to:
+      - p2
+    themes:
+      - technique
+      - emotion
+      - identity
+      - history
+    visual_features:
+      dominant_colors:
+        - blue
+        - yellow
+        - black
+      brightness: medium
+      complexity: low
+    suitable_for:
+      - child
+      - novice
+      - expert
+      - emotion_interest
+      - technique_interest
+    difficulty: easy
+    estimated_explanation_time_sec:
+      short: 20
+      normal: 50
+      detailed: 100
+    affordances:
+      - look_at
+      - point_to
+      - talk_about
+      - compare
+    explanations:
+      child: "This girl is looking right at you! Nobody knows who she was — it's a mystery. See how the little pearl shines? Vermeer painted that with just two tiny touches of white."
+      novice: "Often called the 'Mona Lisa of the North', this portrait shows an unknown girl turning toward us. Vermeer used dark background and luminous skin tones to make her seem incredibly present — and the pearl is painted with just a couple of brushstrokes."
+      expert: "This is a 'tronie' rather than a commissioned portrait: a study of type, costume and light. Vermeer's optical handling — the wet highlight of the pearl, the soft transitions across the face — shows his mastery of rendering light as substance."
+      short: "The 'Mona Lisa of the North' — one glance from this girl and you understand why the painting is world-famous."
+      emotional: "She has just turned to look at you, lips slightly parted, as if about to speak. Four centuries have passed and the moment still has not ended."

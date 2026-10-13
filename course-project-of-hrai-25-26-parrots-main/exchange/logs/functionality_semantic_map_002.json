@@ -1,0 +1,9 @@
+{
+  "domain": "semantic_map_delta",
+  "n_directions": 6,
+  "delta": 0.0,
+  "m_delta": 0.0,
+  "p_delta": 0.0,
+  "m_mismatches": [],
+  "p_sym_diff": []
+}

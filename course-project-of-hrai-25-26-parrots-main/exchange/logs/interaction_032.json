@@ -1,0 +1,41 @@
+{
+  "user_text": "This is not what I had in mind. Show me another one more emotional.",
+  "user_model": {
+    "profile": "expert",
+    "interests": {
+      "emotion": 0.9
+    },
+    "available_time": "short",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p4",
+    "title": "The Scream",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "emotional"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "For a profound exploration of internalized anxiety, I highly recommend Edvard Munch’s \"The Scream,\" which is positioned to the left of Monet’s \"Water Lilies.\" The central figure is not reacting to an external threat but is instead overwhelmed by an internal psychological crisis, a moment where personal dread causes the surrounding landscape to warp and vibrate in sympathetic resonance. Munch’s Expressionist style amplifies this visceral emotion through the use of swirling, blood-red skies and a distorted, skeletal protagonist, effectively visualizing the terrifying subjectivity of human feeling.",
+    "follow_up": "Did the raw, existential angst in Munch's \"The Scream\" resonate with your interest in emotion, or would you prefer to explore another work?"
+  }
+}

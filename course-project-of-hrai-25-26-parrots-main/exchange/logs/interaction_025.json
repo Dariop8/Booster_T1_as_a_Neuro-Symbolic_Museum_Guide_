@@ -1,0 +1,39 @@
+{
+  "user_text": "I'm an art historian and I have very little time. Could you show me an interesting painting?",
+  "user_model": {
+    "profile": "expert",
+    "interests": {},
+    "available_time": "short",
+    "preferred_mood": "contemplative",
+    "preferred_mood_source": "face",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p7",
+    "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_right",
+    "explanation_key": "short"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "Look at Seurat's \"A Sunday Afternoon on the Island of La Grande Jatte\"; its pointillist dots shift as you move, making a quick glance genuinely fun. Notice how the green and blue hues vibrate against the yellow accents.",
+    "follow_up": "Did Seurat's pointillist technique resonate with you, or would you prefer to explore another masterpiece?"
+  }
+}

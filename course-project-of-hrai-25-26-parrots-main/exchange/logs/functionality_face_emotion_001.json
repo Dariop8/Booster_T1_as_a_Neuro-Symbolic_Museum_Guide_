@@ -1,0 +1,100 @@
+{
+  "domain": "perception_face_emotion",
+  "n_images": 9,
+  "accuracy_raw_label": 0.556,
+  "accuracy_mood": 0.778,
+  "mean_confidence_when_correct": 1.0,
+  "mean_confidence_when_wrong": 0.5,
+  "results": [
+    {
+      "file": "happiness.jpg",
+      "expected_raw": "happiness",
+      "predicted_raw": "happiness",
+      "raw_correct": true,
+      "expected_mood": "dynamic",
+      "predicted_mood": "dynamic",
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "happiness_extra.jpg",
+      "expected_raw": "happiness",
+      "predicted_raw": "happiness",
+      "raw_correct": true,
+      "expected_mood": "dynamic",
+      "predicted_mood": "dynamic",
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "sadness.jpg",
+      "expected_raw": "sadness",
+      "predicted_raw": "sadness",
+      "raw_correct": true,
+      "expected_mood": "serene",
+      "predicted_mood": "serene",
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "neutral.jpg",
+      "expected_raw": "neutral",
+      "predicted_raw": "neutral",
+      "raw_correct": true,
+      "expected_mood": null,
+      "predicted_mood": null,
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "neutral_extra.jpg",
+      "expected_raw": "neutral",
+      "predicted_raw": "neutral",
+      "raw_correct": true,
+      "expected_mood": null,
+      "predicted_mood": null,
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "anger.jpg",
+      "expected_raw": "anger",
+      "predicted_raw": "contempt",
+      "raw_correct": false,
+      "expected_mood": "contemplative",
+      "predicted_mood": "contemplative",
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "disgust.jpg",
+      "expected_raw": "disgust",
+      "predicted_raw": "anger",
+      "raw_correct": false,
+      "expected_mood": "contemplative",
+      "predicted_mood": "contemplative",
+      "mood_correct": true,
+      "confidence": 1.0
+    },
+    {
+      "file": "fear_undetected_example.jpg",
+      "expected_raw": "fear",
+      "predicted_raw": null,
+      "raw_correct": false,
+      "expected_mood": "peaceful",
+      "predicted_mood": null,
+      "mood_correct": false,
+      "confidence": 0.0
+    },
+    {
+      "file": "surprise_misclassified_example.jpg",
+      "expected_raw": "surprise",
+      "predicted_raw": "neutral",
+      "raw_correct": false,
+      "expected_mood": "sublime",
+      "predicted_mood": null,
+      "mood_correct": false,
+      "confidence": 1.0
+    }
+  ]
+}

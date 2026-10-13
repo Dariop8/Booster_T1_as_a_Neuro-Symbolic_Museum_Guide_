@@ -1,0 +1,533 @@
+{
+  "generated_at": "2026-09-14T18:28:00+00:00",
+  "triple_count": 240,
+  "nodes": [
+    {
+      "id": "museum_room_1",
+      "type": "Room",
+      "attrs": {}
+    },
+    {
+      "id": "left_wall",
+      "type": "Wall",
+      "attrs": {}
+    },
+    {
+      "id": "front_wall",
+      "type": "Wall",
+      "attrs": {}
+    },
+    {
+      "id": "right_wall",
+      "type": "Wall",
+      "attrs": {}
+    },
+    {
+      "id": "p4",
+      "type": "Painting",
+      "attrs": {
+        "title": "The Scream",
+        "artist": "Edvard Munch",
+        "movement": "Expressionism",
+        "difficulty": "easy",
+        "mood": [
+          "dramatic",
+          "mysterious"
+        ],
+        "themes": [
+          "emotion",
+          "anxiety",
+          "psychology",
+          "nature"
+        ],
+        "perceived_movement": "Expressionism",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "p1",
+      "type": "Painting",
+      "attrs": {
+        "title": "Water Lilies",
+        "artist": "Claude Monet",
+        "movement": "Impressionism",
+        "difficulty": "easy",
+        "mood": [
+          "serene",
+          "peaceful",
+          "contemplative"
+        ],
+        "themes": [
+          "color",
+          "nature",
+          "emotion",
+          "abstraction"
+        ],
+        "perceived_movement": "Impressionism",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "p7",
+      "type": "Painting",
+      "attrs": {
+        "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+        "artist": "Georges Seurat",
+        "movement": "pointillism",
+        "difficulty": "medium",
+        "mood": [
+          "peaceful",
+          "serene",
+          "contemplative"
+        ],
+        "themes": [
+          "technique",
+          "color",
+          "nature",
+          "daily_life"
+        ],
+        "perceived_movement": "Pointillism",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "p3",
+      "type": "Painting",
+      "attrs": {
+        "title": "Liberty Leading the People",
+        "artist": "Eugène Delacroix",
+        "movement": "Romanticism",
+        "difficulty": "medium",
+        "mood": [
+          "dramatic",
+          "dynamic",
+          "energetic"
+        ],
+        "themes": [
+          "history",
+          "politics",
+          "emotion",
+          "drama"
+        ],
+        "perceived_movement": "Romanticism",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "p2",
+      "type": "Painting",
+      "attrs": {
+        "title": "Las Meninas",
+        "artist": "Diego Velázquez",
+        "movement": "Baroque",
+        "difficulty": "medium",
+        "mood": [
+          "mysterious",
+          "contemplative"
+        ],
+        "themes": [
+          "technique",
+          "composition",
+          "history",
+          "identity"
+        ],
+        "perceived_movement": "Baroque",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "p6",
+      "type": "Painting",
+      "attrs": {
+        "title": "The Birth of Venus",
+        "artist": "Sandro Botticelli",
+        "movement": "renaissance",
+        "difficulty": "medium",
+        "mood": [
+          "serene",
+          "sublime"
+        ],
+        "themes": [
+          "history",
+          "mythology",
+          "beauty",
+          "nature"
+        ],
+        "perceived_movement": "Renaissance",
+        "perceived_verified": true,
+        "perception_mismatch": null,
+        "under_maintenance": false
+      }
+    },
+    {
+      "id": "CurrentVisitor",
+      "type": "Visitor",
+      "attrs": {
+        "profile": "expert",
+        "available_time": "short",
+        "preferred_mood": "dramatic",
+        "preferred_mood_source": "text_explicit",
+        "language": "en",
+        "role": "visitor",
+        "interests": {
+          "emotion": 0.68,
+          "color": 0.8
+        }
+      }
+    },
+    {
+      "id": "interest:emotion",
+      "type": "Interest",
+      "attrs": {
+        "label": "emotion"
+      }
+    },
+    {
+      "id": "interest:color",
+      "type": "Interest",
+      "attrs": {
+        "label": "color"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "CurrentVisitor",
+      "target": "p7",
+      "label": "knows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "p4",
+      "label": "knows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "p1",
+      "label": "knows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "p2",
+      "label": "notKnows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "p3",
+      "label": "notKnows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "p6",
+      "label": "notKnows"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "interest:emotion",
+      "label": "hasInterest"
+    },
+    {
+      "source": "CurrentVisitor",
+      "target": "interest:color",
+      "label": "hasInterest"
+    },
+    {
+      "source": "p3",
+      "target": "left_wall",
+      "label": "locatedOnWall"
+    },
+    {
+      "source": "p7",
+      "target": "p2",
+      "label": "rightOf"
+    },
+    {
+      "source": "p6",
+      "target": "p3",
+      "label": "rightOf"
+    },
+    {
+      "source": "p2",
+      "target": "p1",
+      "label": "rightOf"
+    },
+    {
+      "source": "p1",
+      "target": "front_wall",
+      "label": "locatedOnWall"
+    },
+    {
+      "source": "museum_room_1",
+      "target": "left_wall",
+      "label": "hasWall"
+    },
+    {
+      "source": "p1",
+      "target": "p2",
+      "label": "leftOf"
+    },
+    {
+      "source": "museum_room_1",
+      "target": "right_wall",
+      "label": "hasWall"
+    },
+    {
+      "source": "p4",
+      "target": "p6",
+      "label": "rightOf"
+    },
+    {
+      "source": "p1",
+      "target": "p4",
+      "label": "rightOf"
+    },
+    {
+      "source": "p3",
+      "target": "p6",
+      "label": "leftOf"
+    },
+    {
+      "source": "p6",
+      "target": "left_wall",
+      "label": "locatedOnWall"
+    },
+    {
+      "source": "p4",
+      "target": "front_wall",
+      "label": "locatedOnWall"
+    },
+    {
+      "source": "p6",
+      "target": "p4",
+      "label": "leftOf"
+    },
+    {
+      "source": "p4",
+      "target": "p1",
+      "label": "leftOf"
+    },
+    {
+      "source": "p2",
+      "target": "p7",
+      "label": "leftOf"
+    },
+    {
+      "source": "p2",
+      "target": "right_wall",
+      "label": "locatedOnWall"
+    },
+    {
+      "source": "museum_room_1",
+      "target": "front_wall",
+      "label": "hasWall"
+    },
+    {
+      "source": "p7",
+      "target": "right_wall",
+      "label": "locatedOnWall"
+    }
+  ],
+  "pipeline_trace": [
+    {
+      "t": "20:25:00",
+      "stage": "init",
+      "detail": "Knowledge graph built (238 triples, 6/9 paintings hung — robot scan grounded on curator registry)"
+    },
+    {
+      "t": "20:25:03",
+      "stage": "session",
+      "detail": "New visitor — epistemic state reset (all paintings notKnows)"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "perception",
+      "detail": "Mood update from face → serene (conf 1.00)"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "nlu",
+      "detail": "\"Hello, I'm an art historian and I have very little time. Cou\" → intent=request_recommendation (conf=0.75)"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "fsm",
+      "detail": "greeting → recommend → presenting"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "kg_sync",
+      "detail": "profile=expert interests={} mood=serene"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "kg_query",
+      "detail": "SPARQL → \"A Sunday Afternoon on the Island of La Grande Jatte\" (p7)"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "htn",
+      "detail": "plan=['quick_overview', 'point_gesture', 'goodbye_offer'] key=short"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "feasibility",
+      "detail": "Ft=1.0 components={'perception': 1.0, 'comprehension': 1.0, 'projection': 1.0} fallback=None"
+    },
+    {
+      "t": "20:25:23",
+      "stage": "action",
+      "detail": "say(recommend_and_explain) + gesture(point_right, xyz=[np.float64(1.5133272727677682), np.float64(-4.015245510097918), 0.832046261882782])"
+    },
+    {
+      "t": "20:25:59",
+      "stage": "kg_update",
+      "detail": "p7: notKnows → knows (\"A Sunday Afternoon on the Island of La Grande Jatte\")"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "nlu",
+      "detail": "\"This is not what I had in mind. Show me another one more emo\" → intent=request_recommendation (conf=0.85)"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "nlu",
+      "detail": "Explicit mood request → dramatic (overrides face)"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "fsm",
+      "detail": "presenting → recommend → presenting"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "kg_sync",
+      "detail": "profile=expert interests={'emotion': 0.9} mood=dramatic"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "kg_query",
+      "detail": "SPARQL → \"The Scream\" (p4)"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "htn",
+      "detail": "plan=['quick_overview', 'point_gesture', 'goodbye_offer'] key=short"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "feasibility",
+      "detail": "Ft=1.0 components={'perception': 1.0, 'comprehension': 1.0, 'projection': 1.0} fallback=None"
+    },
+    {
+      "t": "20:26:11",
+      "stage": "action",
+      "detail": "say(recommend_and_explain) + gesture(point_front_left, xyz=[np.float64(6.2305035618342535), np.float64(2.2099014143700497), 0.8357426259994507])"
+    },
+    {
+      "t": "20:27:16",
+      "stage": "kg_update",
+      "detail": "p4: notKnows → knows (\"The Scream\")"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "nlu",
+      "detail": "\"Still not what I had in mind. One more colorful please.\" → intent=request_recommendation (conf=0.85)"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "fsm",
+      "detail": "presenting → recommend → presenting"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "kg_sync",
+      "detail": "profile=expert interests={'emotion': 0.68, 'color': 0.8} mood=dramatic"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "kg_query",
+      "detail": "SPARQL → \"Water Lilies\" (p1)"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "htn",
+      "detail": "plan=['quick_overview', 'point_gesture', 'goodbye_offer'] key=short"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "feasibility",
+      "detail": "Ft=1.0 components={'perception': 1.0, 'comprehension': 1.0, 'projection': 1.0} fallback=None"
+    },
+    {
+      "t": "20:27:28",
+      "stage": "action",
+      "detail": "say(recommend_and_explain) + gesture(point_front_right, xyz=[np.float64(5.971701059366465), np.float64(-2.540052182513989), 0.7132342217445373])"
+    },
+    {
+      "t": "20:28:00",
+      "stage": "kg_update",
+      "detail": "p1: notKnows → knows (\"Water Lilies\")"
+    }
+  ],
+  "geometry": {
+    "paintings": [
+      {
+        "id": "p1",
+        "title": "Water Lilies",
+        "x": -1.4465,
+        "y": 2.2918,
+        "wall": "front_wall"
+      },
+      {
+        "id": "p2",
+        "title": "Las Meninas",
+        "x": 0.6295,
+        "y": 3.95,
+        "wall": "right_wall"
+      },
+      {
+        "id": "p3",
+        "title": "Liberty Leading the People",
+        "x": 3.085,
+        "y": -3.943,
+        "wall": "left_wall"
+      },
+      {
+        "id": "p4",
+        "title": "The Scream",
+        "x": -1.4726,
+        "y": -2.4872,
+        "wall": "front_wall"
+      },
+      {
+        "id": "p6",
+        "title": "The Birth of Venus",
+        "x": 0.8607,
+        "y": -3.9776,
+        "wall": "left_wall"
+      },
+      {
+        "id": "p7",
+        "title": "A Sunday Afternoon on the Island of La Grande Jatte",
+        "x": 2.9234,
+        "y": 3.9684,
+        "wall": "right_wall"
+      }
+    ],
+    "robot": {
+      "x": 4.637875080108643,
+      "y": 0.03503236547112465,
+      "yaw": -3.0947659015655518
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "generated_by": "llm-roleplay (llama-3.3-70b-versatile)",
+  "godspeed_ratings": {
+    "anthropomorphism": 3,
+    "animacy": 4,
+    "likeability": 4,
+    "perceived_intelligence": 3,
+    "perceived_safety": 5
+  },
+  "independent_variables": {
+    "hypothesis": "H1",
+    "condition": "with_gesture",
+    "persona": "bambino_accompagnato"
+  },
+  "session_covariates": {
+    "clarification_count": 0,
+    "paintings_shown": 1,
+    "final_profile": "novice"
+  }
+}

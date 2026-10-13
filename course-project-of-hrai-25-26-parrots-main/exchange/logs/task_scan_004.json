@@ -1,0 +1,25 @@
+{
+  "n_repeats": 3,
+  "completion_rate": 0.0,
+  "mean_wall_s": 0.4,
+  "mean_classification_accuracy": null,
+  "mean_scene_graph_wall_accuracy": null,
+  "mean_return_to_home_error_m": null,
+  "runs": [
+    {
+      "completed_full_circuit": false,
+      "error": "discovered_paintings.json not refreshed by this run (subprocess exit code 0) — tail of its output: ERROR: GROQ_API_KEY not set.",
+      "wall_s": 0.4
+    },
+    {
+      "completed_full_circuit": false,
+      "error": "discovered_paintings.json not refreshed by this run (subprocess exit code 0) — tail of its output: ERROR: GROQ_API_KEY not set.",
+      "wall_s": 0.4
+    },
+    {
+      "completed_full_circuit": false,
+      "error": "discovered_paintings.json not refreshed by this run (subprocess exit code 0) — tail of its output: ERROR: GROQ_API_KEY not set.",
+      "wall_s": 0.4
+    }
+  ]
+}

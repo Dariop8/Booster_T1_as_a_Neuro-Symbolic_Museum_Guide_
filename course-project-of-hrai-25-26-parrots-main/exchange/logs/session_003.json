@@ -1,0 +1,16 @@
+{
+  "input_mode": "text",
+  "duration_s": 228.9,
+  "turns": 2,
+  "clarification_count": 0,
+  "paintings_shown": 1,
+  "final_user_model": {
+    "profile": "tourist_short_time",
+    "interests": {
+      "color": 0.8
+    },
+    "available_time": "short",
+    "preferred_mood": "unknown",
+    "language": "it"
+  }
+}

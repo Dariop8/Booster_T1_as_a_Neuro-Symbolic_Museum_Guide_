@@ -1,0 +1,41 @@
+{
+  "user_text": "This is not what I had in mind. Show me another one more emotional.",
+  "user_model": {
+    "profile": "expert",
+    "interests": {
+      "emotion": 0.9
+    },
+    "available_time": "short",
+    "preferred_mood": "dramatic",
+    "preferred_mood_source": "text_explicit",
+    "language": "en",
+    "role": "visitor"
+  },
+  "selected_painting": {
+    "id": "p4",
+    "title": "The Scream",
+    "htn_plan": [
+      "quick_overview",
+      "point_gesture",
+      "goodbye_offer"
+    ],
+    "pointing_skill": "point_front_left",
+    "explanation_key": "emotional"
+  },
+  "feasibility": {
+    "feasible": true,
+    "issue": null,
+    "fallback": null,
+    "feasibility_score": 1.0,
+    "components": {
+      "perception": 1.0,
+      "comprehension": 1.0,
+      "projection": 1.0
+    }
+  },
+  "gesture_executed": true,
+  "robot_messages": {
+    "main": "Given your interest in the profound mechanics of emotion, I would direct your attention to Edvard Munch’s \"The Scream,\" which is positioned to the left of Monet’s \"Water Lilies.\" This seminal Expressionist work transcends mere depiction to articulate a visceral psychological state; the central figure is not reacting to an external threat, but rather to an internal, overwhelming anxiety that causes the surrounding environment to vibrate with their distress. Munch achieves this through a swirling, non-naturalistic sky rendered in intense bands of orange and red, which contrast sharply with the deep, mournful blues of the fjord, effectively externalizing the protagonist’s inner turmoil into the very fabric of the landscape.",
+    "follow_up": "Did the raw anguish of \"The Scream\" resonate with your interest in emotion, or would you prefer to explore another masterpiece?"
+  }
+}

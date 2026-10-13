@@ -1,0 +1,96 @@
+<mujoco model="booster_t1_kinematics_only">
+    <!-- angle="radian": instance.xml's joint ranges (e.g. "-3.31 1.22") are
+         radians, matching arm_head_goal_ramp_actions.cpp's kArmTargets/
+         kHeadTargets values. MuJoCo defaults to degrees, and circus's own
+         SceneParser.cpp injects this same compiler setting when assembling
+         the real scene — without it here, ranges get silently misread as
+         degrees (radians / ~57). -->
+    <compiler angle="radian"/>
+    <!--
+        Kinematics-only skeleton of the Booster-T1 head + both arms, for
+        forward/inverse kinematics (pointing IK) and camera back-projection
+        math. Joint names, axes, body offsets and inertials are copied
+        verbatim from circus/resources/robots/Booster-T1/instance.xml.
+        No meshes/collision geoms: irrelevant for kinematics, and pulling
+        them in requires circus's own asset-path resolution.
+
+        Trunk is the fixed root (robot base frame), not the world frame:
+        the caller is responsible for transforming to/from world coordinates
+        using the robot's spawn pose from the scene yaml, if ever needed
+        (only for testing against ground truth, never at runtime).
+    -->
+    <worldbody>
+        <body name="Trunk" pos="0 0 0">
+            <geom type="sphere" size="0.01" density="0" contype="0" conaffinity="0"/>
+
+            <!-- Head 1 -->
+            <body name="H1" pos="0.0625 0 0.243">
+                <inertial pos="-0.000508 -0.001403 0.057432" quat="0.763881 -0.0132172 0.00173419 0.645219" mass="0.44391" diaginertia="0.000241549 0.00022351 0.000149941"/>
+                <joint name="AAHead_yaw" pos="0 0 0" axis="0 0 1" range="-1.57 1.57"/>
+
+                <!-- Head 2 -->
+                <body name="H2" pos="0 0 0.06185">
+                    <inertial pos="0.007802 0.001262 0.098631" quat="0.988453 0.106172 -0.0745686 -0.0782786" mass="0.631019" diaginertia="0.00203553 0.00192467 0.00172381"/>
+                    <joint name="Head_pitch" pos="0 0 0" axis="0 1 0" range="-0.35 1.22"/>
+
+                    <!-- rgb_cam camera pose: CameraDepth in circus is instantiated
+                         reusing the "*_rgb_cam" camera, so depth pixels are aligned
+                         with THIS pose, not the head_depth_cam_site. -->
+                    <site name="cam_site" pos="0.05 0.06 0.083" quat="-0.5 -0.5 0.5 0.5" size="0.008"/>
+                </body>
+            </body>
+
+            <!-- Left Shoulder Pitch -->
+            <body name="AL1" pos="0.0575 0.1063 0.219" quat="1 0 0.000440565 0">
+                <inertial pos="-0.000677 0.044974 0" quat="0.50423 0.495734 -0.50423 0.495734" mass="0.53" diaginertia="0.001367 0.00129329 0.000292711"/>
+                <joint name="Left_Shoulder_Pitch" pos="0 0 0" axis="0 1 0" range="-3.31 1.22"/>
+
+                <!-- Left Shoulder Roll -->
+                <body name="AL2" pos="0 0.047 0">
+                    <inertial pos="0.003862 0.037976 0" quat="0.487991 0.511727 -0.487991 0.511727" mass="0.16" diaginertia="0.000401 0.00034538 0.00017662"/>
+                    <joint name="Left_Shoulder_Roll" pos="0 0 0" axis="1 0 0" range="-1.74 1.57"/>
+
+                    <!-- Left Elbow Pitch -->
+                    <body name="AL3" pos="0.00025 0.0605 0">
+                        <inertial pos="0 0.085353 -9.9e-05" quat="0.70641 0.707803 0 0" mass="1.02" diaginertia="0.012869 0.012798 0.000620953"/>
+                        <joint name="Left_Elbow_Pitch" pos="0 0 0" axis="0 1 0" range="-2.27 2.27"/>
+
+                        <!-- Left Elbow Yaw -->
+                        <body name="left_hand_link" pos="0 0.1471 0">
+                            <inertial pos="-0.000108 0.109573 0.000591" quat="0.707866 0.706347 -5.22939e-05 -0.000214913" mass="0.327214" diaginertia="0.008159 0.00813104 0.000214962"/>
+                            <joint name="Left_Elbow_Yaw" pos="0 0 0" axis="0 0 1" range="-2.44 0"/>
+                            <!-- pointing reference: ~fingertip, along the hand's local +Y -->
+                            <site name="left_hand_tip" pos="0 0.20 0" size="0.008"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- Right Shoulder Pitch -->
+            <body name="AR1" pos="0.0575 -0.1063 0.219" quat="1 0 0.000440565 0">
+                <inertial pos="-0.000677 -0.044974 0" quat="0.50423 0.495734 -0.50423 0.495734" mass="0.53" diaginertia="0.001367 0.00129329 0.000292711"/>
+                <joint name="Right_Shoulder_Pitch" pos="0 0 0" axis="0 1 0" range="-3.31 1.22"/>
+
+                <!-- Right Shoulder Roll -->
+                <body name="AR2" pos="0 -0.047 0">
+                    <inertial pos="0.003862 -0.037976 0" quat="0.511727 0.487991 -0.511727 0.487991" mass="0.16" diaginertia="0.000401 0.00034538 0.00017662"/>
+                    <joint name="Right_Shoulder_Roll" pos="0 0 0" axis="1 0 0" range="-1.57 1.74"/>
+
+                    <!-- Right Elbow Pitch -->
+                    <body name="AR3" pos="0.00025 -0.0605 0">
+                        <inertial pos="0 -0.085353 -9.9e-05" quat="0.707803 0.70641 0 0" mass="1.02" diaginertia="0.012869 0.012798 0.000620953"/>
+                        <joint name="Right_Elbow_Pitch" pos="0 0 0" axis="0 1 0" range="-2.27 2.27"/>
+
+                        <!-- Right Elbow Yaw -->
+                        <body name="right_hand_link" pos="0 -0.1471 0">
+                            <inertial pos="-0.000108 -0.109573 0.000591" quat="0.706347 0.707866 0.000214913 5.22939e-05" mass="0.327214" diaginertia="0.008159 0.00813104 0.000214962"/>
+                            <joint name="Right_Elbow_Yaw" pos="0 0 0" axis="0 0 1" range="0 2.44"/>
+                            <!-- pointing reference: ~fingertip, along the hand's local -Y -->
+                            <site name="right_hand_tip" pos="0 -0.20 0" size="0.008"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+</mujoco>

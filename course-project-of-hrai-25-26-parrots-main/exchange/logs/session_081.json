@@ -1,0 +1,20 @@
+{
+  "input_mode": "voice",
+  "duration_s": 128.9,
+  "turns": 4,
+  "clarification_count": 0,
+  "social_refusal_count": 1,
+  "staff_command_executed": false,
+  "paintings_shown": 1,
+  "final_user_model": {
+    "profile": "child",
+    "interests": {
+      "color": 0.5
+    },
+    "available_time": "unknown",
+    "preferred_mood": "dynamic",
+    "preferred_mood_source": "face",
+    "language": "en",
+    "role": "visitor"
+  }
+}

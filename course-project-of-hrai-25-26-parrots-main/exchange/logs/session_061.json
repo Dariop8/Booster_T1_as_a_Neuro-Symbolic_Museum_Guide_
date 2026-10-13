@@ -1,0 +1,16 @@
+{
+  "input_mode": "text",
+  "duration_s": 77.6,
+  "turns": 4,
+  "clarification_count": 0,
+  "paintings_shown": 3,
+  "final_user_model": {
+    "profile": "novice",
+    "interests": {},
+    "available_time": "short",
+    "preferred_mood": "contemplative",
+    "preferred_mood_source": "face",
+    "language": "it",
+    "role": "visitor"
+  }
+}

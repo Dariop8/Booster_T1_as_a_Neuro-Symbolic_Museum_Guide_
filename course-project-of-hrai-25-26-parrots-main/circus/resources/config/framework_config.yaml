@@ -1,0 +1,9 @@
+# advice: NO FINAL SLASH in the path_constants paths.
+
+image: hrai-2025:v1
+volumes:
+  - "<simbridge>/tools/booster_motion:/app/booster_motion"
+  - "<simbridge>/.pixi/envs/default:/app/bridge"
+  - "/dev/shm/circus_ipc:/dev/shm/circus_ipc"
+  - "/tmp/.X11-unix:/tmp/.X11-unix"
+  - "<exchange>:/app/exchange"

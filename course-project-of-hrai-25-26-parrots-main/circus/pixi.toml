@@ -1,0 +1,73 @@
+[workspace]
+channels = [
+  "https://prefix.dev/pixi-build-backends",
+  "https://prefix.dev/conda-forge",
+]
+platforms = ["osx-arm64", "linux-64"]
+preview = ["pixi-build"]
+
+[dependencies]
+circus = { path = "." }
+python = "3.12.*"
+pyyaml = ">=6.0.3,<7"
+rdflib = ">=7.6.0,<8"
+scipy = ">=1.11,<2"
+
+[package]
+name = "circus"
+version = "0.1.0"
+
+[package.build]
+backend = { name = "pixi-build-cmake", version = "*" }
+
+[package.build-dependencies]
+cmake = ">=3.27,<4"
+
+[package.host-dependencies]
+python = "3.12.*"
+nanobind = "2.8.*"
+eigen = "==3.4.0"
+yaml-cpp = "==0.8.0"
+nlohmann_json = "==3.12.0"
+pugixml = "==1.15"
+libcurl = "==8.14.1"
+qt6-main = "==6.9.2"
+qt6-charts = "==6.9.2"
+libmujoco = "==3.3.3"
+msgpack-cxx = "==7.0.0"
+libboost-devel = "==1.88.0"
+
+[package.target.linux-64.host-dependencies]
+libgl-devel = "==1.7.0"
+libegl-devel = "==1.7.0"
+
+[package.target.osx-arm64.host-dependencies]
+
+[tasks]
+test = "python -c 'import circuspy; circuspy.test()'"
+clean-containers = "bash clean-containers.sh"
+
+[activation]
+# Add DYLD_LIBRARY_PATH on macOS so the MuJoCo dylib is found when running binaries directly.
+# QT_QPA_PLATFORM=xcb: the conda-forge qt6-main build ships no Wayland platform
+# plugin, so on a Wayland session (Gnome) Qt would fail with "Could not find
+# the Qt platform plugin wayland" — force X11/XWayland instead.
+# FONTCONFIG_FILE: conda-forge's qt6-main ships no fonts of its own (Qt >= 6
+# dropped bundled fonts); point fontconfig at the env's own fonts.conf
+# (which references the font-ttf-* packages) so Qt stops warning "Qt no
+# longer ships fonts" and can actually render text.
+# QT_PLUGIN_PATH: Qt's compiled-in prefix does not resolve to the env here, so
+# the plugin search falls back to $CONDA_PREFIX/bin and finds nothing — first
+# "Could not find the Qt platform plugin xcb", and once platforms/ is found by
+# other means, "neither GLX nor EGL are enabled" because xcbglintegrations/ is
+# still missed (MuJoCo then dies with no OpenGL). Pointing at the plugin root
+# covers platforms/, xcbglintegrations/ and the rest in one go.
+env = { DYLD_LIBRARY_PATH = "$DYLD_LIBRARY_PATH:$CONDA_PREFIX/lib", PATH = "$CONDA_PREFIX/bin:$PATH", QT_QPA_PLATFORM = "xcb", QT_PLUGIN_PATH = "$CONDA_PREFIX/lib/qt6/plugins", FONTCONFIG_FILE = "$CONDA_PREFIX/etc/fonts/fonts.conf" }
+
+[pypi-dependencies]
+opencv-python = ">=4, <5"
+speechrecognition = ">=3.17.0, <4"
+groq = ">=1.5.0, <2"
+hsemotion-onnx = ">=0.3"
+gtts = ">=2.5, <3"
+mujoco = "==3.3.3"

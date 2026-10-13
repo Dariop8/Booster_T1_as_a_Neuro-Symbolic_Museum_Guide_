@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Graph Live Viewer — Booster-T1 Museum Guide</title>
+<style>
+  :root {
+    --page:           #f9f9f7;
+    --surface-1:      #fcfcfb;
+    --surface-2:      #f2f1ee;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --shadow:         rgba(11,11,11,0.06);
+
+    --structural: #b9b7ae;   /* Room / Wall — static scaffolding, de-emphasized */
+    --painting:   #eda100;
+    --visitor:    #eb6834;
+    --interest:   #1baf7a;
+    --good:       #0ca30c;
+    --critical:   #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page:           #0d0d0d;
+      --surface-1:      #1a1a19;
+      --surface-2:      #232322;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --border:         rgba(255,255,255,0.10);
+      --shadow:         rgba(0,0,0,0.35);
+
+      --structural: #55534d;
+      --painting:   #c98500;
+      --visitor:    #d95926;
+      --interest:   #199e70;
+      --good:       #0ca30c;
+      --critical:   #e66767;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page:#0d0d0d; --surface-1:#1a1a19; --surface-2:#232322; --text-primary:#ffffff; --text-secondary:#c3c2b7;
+    --text-muted:#898781; --gridline:#2c2c2a; --border:rgba(255,255,255,0.10); --shadow:rgba(0,0,0,0.35);
+    --structural:#55534d; --painting:#c98500; --visitor:#d95926; --interest:#199e70; --good:#0ca30c; --critical:#e66767;
+  }
+  :root[data-theme="light"] {
+    --page:#f9f9f7; --surface-1:#fcfcfb; --surface-2:#f2f1ee; --text-primary:#0b0b0b; --text-secondary:#52514e;
+    --text-muted:#898781; --gridline:#e1e0d9; --border:rgba(11,11,11,0.10); --shadow:rgba(11,11,11,0.06);
+    --structural:#b9b7ae; --painting:#eda100; --visitor:#eb6834; --interest:#1baf7a; --good:#0ca30c; --critical:#d03b3b;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+  }
+
+  header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-1);
+  }
+  header h1 { font-size: 16px; margin: 0; font-weight: 700; }
+  header .subtitle { font-size: 12px; color: var(--text-secondary); }
+  .spacer { flex: 1; }
+  .status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); flex: none; }
+  .dot.live { background: var(--good); animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot {
+    0%   { box-shadow: 0 0 0 0 rgba(12,163,12,.45); }
+    70%  { box-shadow: 0 0 0 6px rgba(12,163,12,0); }
+    100% { box-shadow: 0 0 0 0 rgba(12,163,12,0); }
+  }
+
+  .waiting-banner {
+    margin: 16px 20px 0; padding: 10px 14px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface-1); color: var(--text-secondary);
+    font-size: 13px; display: none;
+  }
+  .waiting-banner.show { display: block; }
+
+  .flow-strip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 14px 20px 4px; overflow-x: auto;
+  }
+  .flow-step {
+    flex: 1 1 0; min-width: 92px;
+    text-align: center; padding: 8px 6px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface-1);
+    font-size: 11px; color: var(--text-secondary);
+    transition: box-shadow .15s ease, border-color .15s ease;
+    white-space: nowrap;
+  }
+  .flow-step b { display: block; font-size: 12px; color: var(--text-primary); font-weight: 600; }
+  .flow-step.lit {
+    border-color: var(--stage-color, var(--painting));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--stage-color, var(--painting)) 25%, transparent);
+  }
+  .flow-arrow { color: var(--text-muted); font-size: 14px; flex: none; }
+
+  main {
+    display: grid;
+    /* Give the knowledge graph the lion's share of the width so the painting
+       row (6+ cards) has room for the leftOf/rightOf arrows; the pipeline trace
+       reads fine in a narrower column. */
+    grid-template-columns: minmax(0, 2.4fr) minmax(240px, 0.8fr);
+    gap: 16px;
+    padding: 8px 20px 20px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    main { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface-1);
+    padding: 12px 14px 14px;
+    min-width: 0;
+  }
+  .panel h2 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .04em;
+    color: var(--text-muted); margin: 0 0 8px;
+    font-weight: 700;
+  }
+
+  #graph-svg { width: 100%; height: auto; display: block; }
+
+  .node-box rect.card {
+    fill: var(--surface-1);
+    stroke: var(--gridline);
+    stroke-width: 1;
+    filter: drop-shadow(0 1px 2px var(--shadow));
+  }
+  .node-box.pulse rect.card { animation: pulse-ring 1.3s ease-out; }
+  @keyframes pulse-ring {
+    0%   { stroke-width: 3; }
+    100% { stroke-width: 1; }
+  }
+  .node-box.enter { animation: pop-in .35s ease-out; }
+  @keyframes pop-in {
+    0%   { transform-origin: center; transform: scale(0.85); opacity: 0; }
+    100% { transform-origin: center; transform: scale(1); opacity: 1; }
+  }
+  .type-pill { font-size: 8.5px; font-weight: 700; letter-spacing: .03em; fill: white; }
+  .node-title { font-size: 12px; font-weight: 700; fill: var(--text-primary); }
+  .node-sub   { font-size: 10px; fill: var(--text-secondary); }
+  .node-muted { font-size: 9.5px; fill: var(--text-muted); }
+  .node-unavailable { font-size: 9.5px; font-weight: 700; fill: var(--critical); }
+  /* Staff-suspended painting: dashed red outline so it reads as unavailable at a glance */
+  .node-box.unavailable rect.card { stroke: var(--critical) !important; stroke-width: 2; stroke-dasharray: 5 3; }
+
+  .edge { fill: none; stroke-width: 1.6; }
+  .edge.pulse { animation: pulse-edge 1.3s ease-out; }
+  @keyframes pulse-edge { 0% { stroke-width: 3.5; } 100% { stroke-width: 1.6; } }
+  .edge-label { font-size: 9px; fill: var(--text-muted); }
+
+  /* Clickable "full user model" affordance inside the Visitor card */
+  .node-button { font-size: 10px; font-weight: 700; fill: var(--visitor); text-decoration: underline; }
+  .node-box.clickable { cursor: pointer; }
+
+  /* Floating card with the complete visitor user model (opened from the node) */
+  .popover {
+    position: fixed; z-index: 50; max-width: 330px; min-width: 250px;
+    background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: 0 8px 28px var(--shadow), 0 2px 8px var(--shadow);
+    font-size: 12px;
+  }
+  .popover[hidden] { display: none; }
+  .popover-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    background: color-mix(in srgb, var(--visitor) 14%, var(--surface-1));
+    border-radius: 10px 10px 0 0;
+  }
+  .popover-head button {
+    border: none; background: none; cursor: pointer; font-size: 14px;
+    color: var(--text-muted); line-height: 1; padding: 0 2px;
+  }
+  #visitor-popover-body { padding: 8px 12px 12px; }
+  .um-row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
+  .um-row .k { color: var(--text-muted); }
+  .um-row .v { color: var(--text-primary); font-weight: 600; text-align: right; }
+  .um-section {
+    margin: 10px 0 4px; font-size: 10px; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--text-muted); font-weight: 700;
+    border-top: 1px solid var(--border); padding-top: 8px;
+  }
+  .um-interest { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+  .um-interest .k { min-width: 88px; color: var(--text-secondary); }
+  .um-interest .bar { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+  .um-interest .bar > i { display: block; height: 100%; background: var(--interest); }
+  .um-interest .v { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .um-empty { color: var(--text-muted); font-style: italic; padding: 2px 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 9px 16px; margin-top: 10px; font-size: 11px; color: var(--text-secondary); }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+  .line-swatch { width: 18px; height: 0; border-top: 2px solid; display: inline-block; flex: none; }
+
+  /* Mini semantic-map (M, top-down) — small companion to the node-link graph above */
+  .map-wrap { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .map-wrap h3 { margin: 0 0 6px; font-size: 12.5px; color: var(--text-secondary); font-weight: 700; }
+  #map-svg { width: 260px; max-width: 100%; height: auto; display: block; background: var(--surface-2); border-radius: 8px; }
+  .map-caption { margin-top: 6px; font-size: 10.5px; color: var(--text-muted); }
+  .map-empty { font-size: 11px; color: var(--text-muted); font-style: italic; }
+  .map-painting-dot { fill: var(--painting); stroke: var(--surface-1); stroke-width: 1.5; }
+  .map-painting-label { font-size: 7.5px; fill: var(--text-secondary); }
+  .map-robot { fill: var(--visitor); }
+  .map-room-outline { fill: none; stroke: var(--structural); stroke-width: 1; stroke-dasharray: 3,3; }
+
+  #trace-log {
+    max-height: 600px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .trace-entry {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 8px; font-size: 11.5px;
+    background: var(--surface-2);
+  }
+  .trace-entry .badge {
+    display: inline-block; font-size: 9.5px; font-weight: 700;
+    padding: 1px 6px; border-radius: 10px; margin-right: 6px;
+    color: white;
+  }
+  .trace-entry .t { color: var(--text-muted); font-variant-numeric: tabular-nums; margin-right: 6px; }
+  .trace-entry .detail { color: var(--text-primary); }
+  .trace-entry.new { animation: flash-in 1s ease-out; }
+  @keyframes flash-in { 0% { background: color-mix(in srgb, var(--painting) 22%, var(--surface-2)); } 100% { background: var(--surface-2); } }
+
+  footer {
+    padding: 6px 20px 22px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5;
+  }
+  footer b { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🕸️ Knowledge Graph Live Viewer</h1>
+  <div class="subtitle">Booster-T1 museum guide — RDF/OWL + SPARQL + HTN + self-awareness</div>
+  <div class="spacer"></div>
+  <div class="status"><span class="dot" id="status-dot"></span><span id="status-text">waiting…</span></div>
+</header>
+
+<div class="waiting-banner" id="waiting-banner">
+  Waiting for <code>kg_snapshot.json</code> — start <code>guida_museale_core.py</code> (or <code>face_trigger.py</code>)
+  from the <code>circus/</code> folder: the graph snapshot and the pipeline trace will appear here automatically.
+</div>
+
+<div class="flow-strip" id="flow-strip"></div>
+
+<main>
+  <div class="panel">
+    <h2>Knowledge Graph (current state)</h2>
+    <svg id="graph-svg" viewBox="0 0 1140 800" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--text-muted)"></path>
+        </marker>
+      </defs>
+      <g id="edges-layer"></g>
+      <g id="nodes-layer"></g>
+    </svg>
+    <div class="legend" id="legend"></div>
+
+    <div class="map-wrap">
+      <h3>Semantic map (M, top-down)</h3>
+      <div id="map-container"></div>
+      <div class="map-caption">Real positions from the robot's own scan, expressed in R (the world frame — see the KG's WorldFrame node).</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Pipeline trace (live)</h2>
+    <div id="trace-log"></div>
+  </div>
+</main>
+
+<div id="visitor-popover" class="popover" hidden>
+  <div class="popover-head">
+    <span>🧑 Visitor — full user model</span>
+    <button id="visitor-popover-close" aria-label="close">✕</button>
+  </div>
+  <div id="visitor-popover-body"></div>
+</div>
+
+<footer>
+  <b>How to read it:</b> at the top, the scene's static scaffolding (Room → Wall, gray, never changes);
+  in the middle, the Paintings (amber), with the visitor's "knowledge" state (green <code>knows</code> edge
+  = already explained, dashed gray <code>notKnows</code> edge = not yet) and the spatial <code>left of</code>/
+  <code>right of</code> edges (HRAI 4/5); at the bottom, the Visitor node (orange) with its <b>Interest</b>
+  nodes (green) that appear one at a time as the conversation discovers them — that is the part of the graph
+  that is genuinely "compiled" live. On the right, step by step, how the robot got there: Perception → NLU →
+  FSM → KG Sync → SPARQL → HTN → Feasibility (HRAI 9) → KG Update → Action. Polls <code>kg_snapshot.json</code>
+  once a second.
+</footer>
+
+<script>
+const POLL_MS = 500;
+const SNAPSHOT_URL = "kg_snapshot.json";
+
+const STAGE_META = {
+  init:        { label: "Init",        color: "var(--text-muted)" },
+  session:     { label: "Session",     color: "var(--text-muted)" },
+  perception:  { label: "Perception",  color: "var(--interest)" },
+  nlu:         { label: "NLU (LLM)",   color: "var(--visitor)" },
+  fsm:         { label: "FSM",         color: "var(--painting)" },
+  kg_sync:     { label: "KG Sync",     color: "var(--visitor)" },
+  kg_query:    { label: "SPARQL",      color: "var(--good)" },
+  htn:         { label: "HTN Plan",    color: "var(--interest)" },
+  feasibility: { label: "Feasibility", color: "var(--critical)" },
+  kg_update:   { label: "KG Update",   color: "var(--good)" },
+  action:      { label: "Action",      color: "var(--painting)" },
+};
+const FLOW_STAGES = ["perception", "nlu", "fsm", "kg_sync", "kg_query", "htn", "feasibility", "kg_update", "action"];
+const NODE_COLOR = { Room: "var(--structural)", Wall: "var(--structural)", Painting: "var(--painting)", Visitor: "var(--visitor)", Interest: "var(--interest)" };
+const TYPE_ICON  = { Room: "🏛", Wall: "🧱", Painting: "🖼", Visitor: "🧑", Interest: "★" };
+
+let lastSnapshotRaw = null;
+let lastNodeSig = new Map();   // id -> JSON string of attrs
+let lastEdgeSig = new Set();   // "source|target|label"
+let seenNodeIds = new Set();   // for the "enter" pop-in animation on brand-new nodes
+let renderedTraceCount = 0;
+let lastOkAt = 0;
+let currentVisitorAttrs = null;   // last-seen Visitor attrs, read by the popover
+
+// ---------------------------------------------------------------- utilities
+function esc(s) { return String(s); }
+
+function wrapLine(text, maxChars) {
+  text = text || "";
+  if (text.length <= maxChars) return [text];
+  const words = text.split(" ");
+  const lines = [];
+  let cur = "";
+  for (const w of words) {
+    const test = cur ? cur + " " + w : w;
+    if (test.length > maxChars && cur) { lines.push(cur); cur = w; }
+    else cur = test;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function fitLines(text, maxChars, maxLines) {
+  const lines = wrapLine(text, maxChars);
+  if (lines.length <= maxLines) return lines;
+  const kept = lines.slice(0, maxLines);
+  let last = kept[maxLines - 1];
+  if (last.length > maxChars - 1) last = last.slice(0, Math.max(0, maxChars - 1));
+  kept[maxLines - 1] = last.replace(/\s+\S*$/, "") + "…";
+  return kept;
+}
+
+// ---------------------------------------------------------------- chrome
+function buildFlowStrip() {
+  const el = document.getElementById("flow-strip");
+  el.innerHTML = "";
+  FLOW_STAGES.forEach((stage, i) => {
+    const meta = STAGE_META[stage];
+    const box = document.createElement("div");
+    box.className = "flow-step";
+    box.id = "flow-" + stage;
+    box.style.setProperty("--stage-color", meta.color);
+    box.innerHTML = `<b>${meta.label}</b>${stage}`;
+    el.appendChild(box);
+    if (i < FLOW_STAGES.length - 1) {
+      const arrow = document.createElement("div");
+      arrow.className = "flow-arrow";
+      arrow.textContent = "→";
+      el.appendChild(arrow);
+    }
+  });
+}
+
+function litFlow(stage) {
+  const box = document.getElementById("flow-" + stage);
+  if (!box) return;
+  box.classList.add("lit");
+  setTimeout(() => box.classList.remove("lit"), 1500);
+}
+
+function buildLegend() {
+  document.getElementById("legend").innerHTML = `
+    <span><span class="swatch" style="background:var(--structural)"></span>Room / Wall (static)</span>
+    <span><span class="swatch" style="background:var(--painting)"></span>Painting</span>
+    <span><span class="swatch" style="background:var(--visitor)"></span>Visitor</span>
+    <span><span class="swatch" style="background:var(--interest)"></span>Interest (discovered from conversation)</span>
+    <span><span class="line-swatch" style="border-color:var(--good)"></span>knows</span>
+    <span><span class="line-swatch" style="border-color:var(--text-muted);border-top-style:dashed"></span>notKnows</span>
+    <span><span class="line-swatch" style="border-color:var(--text-secondary);border-top-style:dotted"></span>left of / right of</span>
+    <span><span class="swatch" style="background:var(--critical)"></span>VLM hallucination (HRAI 8)</span>
+  `;
+}
+
+function setStatus(ok) {
+  const dot = document.getElementById("status-dot");
+  const text = document.getElementById("status-text");
+  const banner = document.getElementById("waiting-banner");
+  if (ok) {
+    dot.classList.add("live");
+    text.textContent = "live — updated just now";
+    banner.classList.remove("show");
+  } else {
+    dot.classList.remove("live");
+    const secs = lastOkAt ? Math.round((Date.now() - lastOkAt) / 1000) : null;
+    text.textContent = secs !== null ? `no data for ${secs}s` : "waiting…";
+    banner.classList.add("show");
+  }
+}
+
+// ---------------------------------------------------------------- layout
+// Order Painting nodes by the leftOf spatial chain (HRAI 4/5), not by node id
+// — ids like "p1".."p4" have no relation to physical left-to-right position,
+// and sorting by id alone put paintings in the wrong visual order, forcing
+// the leftOf/rightOf arcs to stretch backwards across the whole row.
+function orderBySpatialChain(paintingNodes, edges) {
+  if (paintingNodes.length <= 1) return paintingNodes;
+  const ids = new Set(paintingNodes.map(n => n.id));
+  const leftOfMap = new Map();   // source -> target ("source is left of target")
+  const hasSomethingToItsLeft = new Set();
+  for (const e of edges) {
+    if (e.label === "leftOf" && ids.has(e.source) && ids.has(e.target)) {
+      leftOfMap.set(e.source, e.target);
+      hasSomethingToItsLeft.add(e.target);
+    }
+  }
+  const start = paintingNodes.find(n => !hasSomethingToItsLeft.has(n.id));
+  if (!start) return [...paintingNodes].sort((a, b) => a.id.localeCompare(b.id)); // no chain info: fallback
+
+  const ordered = [], visited = new Set();
+  let cur = start;
+  while (cur && !visited.has(cur.id)) {
+    ordered.push(cur);
+    visited.add(cur.id);
+    const nextId = leftOfMap.get(cur.id);
+    cur = nextId ? paintingNodes.find(n => n.id === nextId) : null;
+  }
+  for (const n of paintingNodes) if (!visited.has(n.id)) ordered.push(n); // safety net
+  return ordered;
+}
+
+// Fixed rows by node type on a 1140x800 viewBox. Interests hang below the
+// Visitor row, appearing one at a time as the conversation discovers them.
+function layout(nodes, edges) {
+  const rows = { Room: [], Wall: [], Painting: [], Visitor: [], Interest: [] };
+  for (const n of nodes) (rows[n.type] || (rows[n.type] = [])).push(n);
+
+  for (const t of ["Room", "Visitor", "Interest"]) rows[t].sort((a, b) => a.id.localeCompare(b.id));
+  rows.Painting = orderBySpatialChain(rows.Painting, edges);
+
+  // Order Wall nodes by the average position of the paintings placed on them
+  // (via locatedOnWall), so the wall row lines up with what's actually under
+  // each wall instead of an arbitrary string sort ("front_wall" < "left_wall").
+  const paintingIndex = new Map(rows.Painting.map((n, i) => [n.id, i]));
+  const wallChildIndices = new Map();
+  for (const e of edges) {
+    if (e.label === "locatedOnWall" && paintingIndex.has(e.source)) {
+      const arr = wallChildIndices.get(e.target) || [];
+      arr.push(paintingIndex.get(e.source));
+      wallChildIndices.set(e.target, arr);
+    }
+  }
+  const avgChildIndex = (wallId) => {
+    const arr = wallChildIndices.get(wallId);
+    return arr && arr.length ? arr.reduce((s, v) => s + v, 0) / arr.length : 999;
+  };
+  rows.Wall.sort((a, b) => avgChildIndex(a.id) - avgChildIndex(b.id));
+
+  const rowY   = { Room: 50, Wall: 190, Painting: 380, Visitor: 590, Interest: 730 };
+  const rowSize = {
+    Room:     { w: 150, h: 54 },
+    Wall:     { w: 140, h: 50 },
+    Painting: { w: 196, h: 138 },
+    Visitor:  { w: 470, h: 118 },
+    Interest: { w: 128, h: 42 },
+  };
+
+  const CANVAS_W = 1140;              // must match the SVG viewBox width
+  const margin = 90;
+  const usable = CANVAS_W - margin * 2;
+  const positions = new Map();
+  for (const type of Object.keys(rows)) {
+    const list = rows[type];
+    const n = list.length;
+    if (!n) continue;
+    const spacing = usable / n;        // horizontal slot per node in this row
+    let { w, h } = rowSize[type];
+    // Paintings: when many are hung (6+) the fixed 196px card is wider than its
+    // slot, so cards overlap and bury the side-to-side leftOf/rightOf arrows.
+    // Shrink the card to leave ~50px of clear gap between neighbours for the arrow.
+    if (type === "Painting") w = Math.max(112, Math.min(w, Math.round(spacing - 50)));
+    list.forEach((node, i) => {
+      const cx = margin + (usable * (i + 0.5)) / n;
+      positions.set(node.id, { cx, cy: rowY[type], w, h, node });
+    });
+  }
+  return positions;
+}
+
+function attrsSignature(attrs) { return JSON.stringify(attrs || {}); }
+
+// ---------------------------------------------------------------- node content
+function nodeLines(n, width) {
+  const a = n.attrs || {};
+  if (n.type === "Room") return [{ cls: "node-sub", text: n.id, maxChars: 20, maxLines: 1 }];
+  if (n.type === "Wall") return [{ cls: "node-sub", text: n.id, maxChars: 18, maxLines: 1 }];
+  if (n.type === "Interest") return [{ cls: "node-title", text: a.label || n.id, maxChars: 14, maxLines: 2 }];
+  if (n.type === "Painting") {
+    // Scale the per-line character budget to the (possibly shrunk) card width so
+    // the text still wraps inside a narrow card instead of spilling over its edge.
+    const s = (width || 196) / 196;
+    const mc = (base) => Math.max(8, Math.round(base * s));
+    const known = a.perception_mismatch ? "⚠ VLM mismatch" : (a.perceived_verified ? "✓ perceived by the robot" : "— not yet scanned");
+    const lines = [
+      { cls: "node-title", text: a.title || n.id,                     maxChars: mc(22), maxLines: 2 },
+      { cls: "node-sub",   text: [a.artist, a.movement].filter(Boolean).join(" · "), maxChars: mc(26), maxLines: 1 },
+      { cls: "node-muted", text: "mood: " + (a.mood || []).slice(0, 2).join(", "),   maxChars: mc(26), maxLines: 1 },
+      { cls: "node-muted", text: known,                                maxChars: mc(26), maxLines: 1 },
+    ];
+    // Staff-suspended paintings are excluded from recommendations — make that
+    // state visible on the card itself, not just via the badge/border.
+    if (a.under_maintenance) {
+      lines.push({ cls: "node-unavailable", text: "⛔ UNAVAILABLE (maintenance)", maxChars: mc(26), maxLines: 1 });
+    }
+    return lines;
+  }
+  // Visitor — the main fields fit in the card; the complete user model (mood
+  // provenance, interest weights, ...) is one click away via the button added
+  // in renderGraph, which opens #visitor-popover.
+  const moodSrc = a.preferred_mood_source && a.preferred_mood_source !== "—"
+    ? " (src: " + a.preferred_mood_source + ")" : "";
+  return [
+    { cls: "node-title", text: "User  ·  profile: " + (a.profile || "unknown"), maxChars: 44, maxLines: 1 },
+    { cls: "node-sub",   text: "preferred mood: " + (a.preferred_mood || "unknown") + moodSrc + "   ·   time: " + (a.available_time || "unknown"), maxChars: 74, maxLines: 1 },
+    { cls: "node-sub",   text: "language: " + (a.language || "unknown") + "   ·   role: " + (a.role || "visitor"), maxChars: 74, maxLines: 1 },
+  ];
+}
+
+// ---------------------------------------------------------------- render
+function renderGraph(data) {
+  const nodesLayer = document.getElementById("nodes-layer");
+  const edgesLayer = document.getElementById("edges-layer");
+  nodesLayer.innerHTML = "";
+  edgesLayer.innerHTML = "";
+
+  const positions = layout(data.nodes, data.edges);
+  const newNodeSig = new Map();
+  const newEdgeSig = new Set();
+  const svgNS = "http://www.w3.org/2000/svg";
+
+  // Edges first (under nodes).
+  //
+  // leftOf/rightOf are stored as TWO triples per adjacent pair (p1 leftOf p2
+  // AND p2 rightOf p1 — the same relation seen from both sides). Drawing both
+  // produced two overlapping arcs with overlapping labels between every pair
+  // of paintings; spatialPairsSeen keeps only one arc per unordered pair,
+  // always drawn left-to-right so the label reads naturally.
+  const spatialPairsSeen = new Set();
+
+  for (const e of data.edges) {
+    const a = positions.get(e.source), b = positions.get(e.target);
+    if (!a || !b) continue;
+
+    const isSpatial = e.label === "leftOf" || e.label === "rightOf";
+    if (isSpatial) {
+      const pairKey = [e.source, e.target].sort().join("|");
+      if (spatialPairsSeen.has(pairKey)) continue;   // already drawn from the other side
+      if (a.cx > b.cx) continue;                     // wait for the left-to-right ordering
+      spatialPairsSeen.add(pairKey);
+    }
+
+    const key = `${e.source}|${e.target}|${e.label}`;
+    newEdgeSig.add(key);
+    const changed = !lastEdgeSig.has(key) && lastEdgeSig.size > 0;
+
+    let stroke = "var(--gridline)", dash = "none", showLabel = false;
+    if (e.label === "knows")        { stroke = "var(--good)"; }
+    else if (e.label === "notKnows"){ stroke = "var(--text-muted)"; dash = "5,4"; }
+    else if (isSpatial)             { stroke = "var(--text-secondary)"; dash = "1.5,3.5"; showLabel = true; }
+    else if (e.label === "hasInterest") { stroke = "var(--interest)"; }
+
+    // Anchor points: same row (e.g. Painting <-> Painting) connects side to
+    // side with an arc rising above the row; different rows connect the
+    // facing edges (bottom of the upper node to top of the lower one).
+    let x1, y1, x2, y2, curveOffsetX = 0, curveOffsetY;
+    if (a.cy === b.cy) {
+      x1 = a.cx + a.w / 2; y1 = a.cy;
+      x2 = b.cx - b.w / 2; y2 = b.cy;
+      curveOffsetY = -28;
+    } else {
+      const aAboveB = a.cy < b.cy;
+      x1 = a.cx; y1 = aAboveB ? a.cy + a.h / 2 : a.cy - a.h / 2;
+      x2 = b.cx; y2 = aAboveB ? b.cy - b.h / 2 : b.cy + b.h / 2;
+      curveOffsetY = 0;
+    }
+    const midx = (x1 + x2) / 2 + curveOffsetX;
+    const midy = (y1 + y2) / 2 + curveOffsetY;
+
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d", `M ${x1} ${y1} Q ${midx} ${midy} ${x2} ${y2}`);
+    path.setAttribute("class", "edge" + (changed ? " pulse" : ""));
+    path.setAttribute("stroke", stroke);
+    path.setAttribute("stroke-dasharray", dash);
+    if (e.label === "knows" || isSpatial || e.label === "hasInterest") {
+      path.setAttribute("marker-end", "url(#arrow)");
+    }
+    edgesLayer.appendChild(path);
+
+    if (showLabel) {
+      const label = document.createElementNS(svgNS, "text");
+      label.setAttribute("x", midx);
+      label.setAttribute("y", midy - 5);
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("class", "edge-label");
+      label.textContent = e.label === "leftOf" ? "left of" : "right of";
+      edgesLayer.appendChild(label);
+    }
+  }
+
+  // Nodes
+  for (const [id, pos] of positions) {
+    const n = pos.node;
+    const sig = attrsSignature(n.attrs);
+    newNodeSig.set(id, sig);
+    const isNew = !seenNodeIds.has(id);
+    const changed = !isNew && lastNodeSig.has(id) && lastNodeSig.get(id) !== sig;
+    seenNodeIds.add(id);
+
+    const g = document.createElementNS(svgNS, "g");
+    let cls = "node-box";
+    if (isNew && lastNodeSig.size > 0) cls += " enter";
+    if (changed) cls += " pulse";
+    if (n.type === "Painting" && n.attrs && n.attrs.under_maintenance) cls += " unavailable";
+    g.setAttribute("class", cls);
+    g.setAttribute("transform", `translate(${pos.cx - pos.w / 2}, ${pos.cy - pos.h / 2})`);
+
+    const rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("class", "card");
+    rect.setAttribute("width", pos.w);
+    rect.setAttribute("height", pos.h);
+    rect.setAttribute("rx", 10);
+    rect.setAttribute("stroke", NODE_COLOR[n.type] || "var(--gridline)");
+    g.appendChild(rect);
+
+    const accent = document.createElementNS(svgNS, "rect");
+    accent.setAttribute("width", 4);
+    accent.setAttribute("height", pos.h);
+    accent.setAttribute("rx", 2);
+    accent.setAttribute("fill", NODE_COLOR[n.type] || "var(--gridline)");
+    g.appendChild(accent);
+
+    const title = document.createElementNS(svgNS, "title");
+    title.textContent = `${n.type} — ${id}\n` + Object.entries(n.attrs || {})
+      .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`).join("\n");
+    g.appendChild(title);
+
+    // Type pill (top-right corner)
+    const pillW = Math.min(pos.w - 16, 8 + n.type.length * 6);
+    const pill = document.createElementNS(svgNS, "rect");
+    pill.setAttribute("x", pos.w - pillW - 8);
+    pill.setAttribute("y", 7);
+    pill.setAttribute("width", pillW);
+    pill.setAttribute("height", 13);
+    pill.setAttribute("rx", 6.5);
+    pill.setAttribute("fill", NODE_COLOR[n.type] || "var(--gridline)");
+    g.appendChild(pill);
+    const pillText = document.createElementNS(svgNS, "text");
+    pillText.setAttribute("x", pos.w - pillW/2 - 8);
+    pillText.setAttribute("y", 16.5);
+    pillText.setAttribute("text-anchor", "middle");
+    pillText.setAttribute("class", "type-pill");
+    pillText.textContent = (TYPE_ICON[n.type] || "") + " " + n.type.toUpperCase();
+    g.appendChild(pillText);
+
+    // Wrapped, multi-line body text — this is what fixes the overlap:
+    // every line is measured and wrapped to the node's own width instead of
+    // spilling into neighbouring nodes.
+    let yCursor = 30;
+    for (const line of nodeLines(n, pos.w)) {
+      const lines = fitLines(line.text, line.maxChars, line.maxLines);
+      for (const txt of lines) {
+        const t = document.createElementNS(svgNS, "text");
+        t.setAttribute("x", 12);
+        t.setAttribute("y", yCursor);
+        t.setAttribute("class", line.cls);
+        t.textContent = txt;
+        g.appendChild(t);
+        yCursor += 14.5;
+      }
+      yCursor += 2;
+    }
+
+    // Visitor card: expose the full user model behind a click (button + whole
+    // card clickable). currentVisitorAttrs is what the popover reads.
+    if (n.type === "Visitor") {
+      currentVisitorAttrs = n.attrs || {};
+      g.classList.add("clickable");
+      g.setAttribute("data-visitor", "1");
+      g.addEventListener("click", (ev) => { ev.stopPropagation(); openVisitorPopover(g); });
+      const btn = document.createElementNS(svgNS, "text");
+      btn.setAttribute("x", 12);
+      btn.setAttribute("y", pos.h - 11);
+      btn.setAttribute("class", "node-button");
+      btn.textContent = "▸ full user model";
+      g.appendChild(btn);
+      if (!document.getElementById("visitor-popover").hidden) fillVisitorPopover();
+    }
+
+    // Perception-mismatch flag (HRAI 8 hallucination grounding)
+    if (n.type === "Painting" && n.attrs && n.attrs.perception_mismatch) {
+      const badge = document.createElementNS(svgNS, "circle");
+      badge.setAttribute("cx", 12);
+      badge.setAttribute("cy", 12);
+      badge.setAttribute("r", 5.5);
+      badge.setAttribute("fill", "var(--critical)");
+      g.appendChild(badge);
+      const bt = document.createElementNS(svgNS, "title");
+      bt.textContent = "VLM hallucination: " + n.attrs.perception_mismatch;
+      badge.appendChild(bt);
+    }
+
+    nodesLayer.appendChild(g);
+  }
+
+  lastNodeSig = newNodeSig;
+  lastEdgeSig = newEdgeSig;
+}
+
+function renderMap(geometry) {
+  // M expressed in R — a small top-down companion to the node-link graph
+  // above, which only shows P (leftOf/rightOf as abstract edges, no real
+  // position). Real xyz comes from the robot's own scan (discovered_paintings
+  // .json via guida_museale_core._export_kg_snapshot), so before a scan has
+  // ever run there is nothing to plot.
+  const container = document.getElementById("map-container");
+  const paintings = (geometry && geometry.paintings) || [];
+  const robot = geometry && geometry.robot;
+  if (paintings.length === 0 && !robot) {
+    container.innerHTML = '<div class="map-empty">not scanned yet</div>';
+    return;
+  }
+
+  const svgNS = "http://www.w3.org/2000/svg";
+  const W = 260, H = 190, PAD = 20;
+
+  const xs = paintings.map(p => p.x).concat(robot ? [robot.x] : []);
+  const ys = paintings.map(p => p.y).concat(robot ? [robot.y] : []);
+  let minX = Math.min(...xs), maxX = Math.max(...xs);
+  let minY = Math.min(...ys), maxY = Math.max(...ys);
+  // Guard against a degenerate (single-point / zero-span) bounding box.
+  if (maxX - minX < 0.5) { const c = (maxX + minX) / 2; minX = c - 0.5; maxX = c + 0.5; }
+  if (maxY - minY < 0.5) { const c = (maxY + minY) / 2; minY = c - 0.5; maxY = c + 0.5; }
+
+  const scale = Math.min((W - 2 * PAD) / (maxX - minX), (H - 2 * PAD) / (maxY - minY));
+  // Flip Y so the panel reads top-down/north-up on screen even though world-Y
+  // grows "up" in the robot's math convention (to_world_frame's cos/sin).
+  const toSvg = (x, y) => [PAD + (x - minX) * scale, H - PAD - (y - minY) * scale];
+
+  const svg = document.createElementNS(svgNS, "svg");
+  svg.setAttribute("id", "map-svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+  const [ox, oy] = toSvg(minX, maxY);
+  const outline = document.createElementNS(svgNS, "rect");
+  outline.setAttribute("class", "map-room-outline");
+  outline.setAttribute("x", ox);
+  outline.setAttribute("y", oy);
+  outline.setAttribute("width", (maxX - minX) * scale);
+  outline.setAttribute("height", (maxY - minY) * scale);
+  svg.appendChild(outline);
+
+  for (const p of paintings) {
+    const [cx, cy] = toSvg(p.x, p.y);
+    const dot = document.createElementNS(svgNS, "circle");
+    dot.setAttribute("class", "map-painting-dot");
+    dot.setAttribute("cx", cx); dot.setAttribute("cy", cy); dot.setAttribute("r", 4);
+    const dotTitle = document.createElementNS(svgNS, "title");
+    dotTitle.textContent = p.title + (p.wall ? ` — ${p.wall}` : "");
+    dot.appendChild(dotTitle);
+    svg.appendChild(dot);
+
+    const label = document.createElementNS(svgNS, "text");
+    label.setAttribute("class", "map-painting-label");
+    label.setAttribute("x", cx + 6);
+    label.setAttribute("y", cy + 3);
+    label.textContent = p.id;
+    svg.appendChild(label);
+  }
+
+  if (robot) {
+    const [cx, cy] = toSvg(robot.x, robot.y);
+    const size = 6;
+    const pt = (a) => [cx + size * Math.cos(a), cy - size * Math.sin(a)];
+    const [tx, ty] = pt(robot.yaw);
+    const [lx, ly] = pt(robot.yaw + 2.5);
+    const [rx, ry] = pt(robot.yaw - 2.5);
+    const tri = document.createElementNS(svgNS, "polygon");
+    tri.setAttribute("class", "map-robot");
+    tri.setAttribute("points", `${tx},${ty} ${lx},${ly} ${rx},${ry}`);
+    const triTitle = document.createElementNS(svgNS, "title");
+    triTitle.textContent = "Robot (live pose)";
+    tri.appendChild(triTitle);
+    svg.appendChild(tri);
+  }
+
+  container.innerHTML = "";
+  container.appendChild(svg);
+}
+
+function renderTrace(trace) {
+  const log = document.getElementById("trace-log");
+  const toRender = trace.slice(renderedTraceCount);
+  toRender.forEach((entry, i) => {
+    const meta = STAGE_META[entry.stage] || { label: entry.stage, color: "var(--text-muted)" };
+    const row = document.createElement("div");
+    row.className = "trace-entry new";
+    row.innerHTML = `<span class="badge" style="background:${meta.color}">${meta.label}</span>` +
+                     `<span class="t">${entry.t}</span><span class="detail"></span>`;
+    row.querySelector(".detail").textContent = entry.detail;
+    log.appendChild(row);
+    // Stages that fired within the same poll window (e.g. KG Sync → SPARQL →
+    // HTN → Feasibility, which run within milliseconds of each other) are
+    // staggered slightly so the flow strip lights them in their true order
+    // instead of as one simultaneous flash.
+    setTimeout(() => litFlow(entry.stage), i * 350);
+  });
+  renderedTraceCount = trace.length;
+  while (log.children.length > 80) log.removeChild(log.firstChild);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ---------------------------------------------------------------- visitor popover
+function fmtVal(v) {
+  if (v === undefined || v === null || v === "") return "—";
+  return String(v);
+}
+
+function fillVisitorPopover() {
+  const a = currentVisitorAttrs || {};
+  const rows = [
+    ["Profile",        a.profile],
+    ["Role",           a.role],
+    ["Available time", a.available_time],
+    ["Preferred mood", a.preferred_mood],
+    ["Mood source",    a.preferred_mood_source],
+    ["Language",       a.language],
+  ];
+  let html = rows
+    .map(([k, v]) => `<div class="um-row"><span class="k">${k}</span><span class="v">${esc(fmtVal(v))}</span></div>`)
+    .join("");
+
+  html += `<div class="um-section">Interests (weight)</div>`;
+  const interests = a.interests && typeof a.interests === "object" ? Object.entries(a.interests) : [];
+  interests.sort((x, y) => Number(y[1]) - Number(x[1]));
+  if (!interests.length) {
+    html += `<div class="um-empty">none discovered yet — they appear as the conversation reveals them</div>`;
+  } else {
+    html += interests.map(([theme, w]) => {
+      const pct = Math.max(0, Math.min(100, Math.round(Number(w) * 100)));
+      return `<div class="um-interest"><span class="k">${esc(theme)}</span>` +
+             `<span class="bar"><i style="width:${pct}%"></i></span>` +
+             `<span class="v">${Number(w).toFixed(2)}</span></div>`;
+    }).join("");
+  }
+  document.getElementById("visitor-popover-body").innerHTML = html;
+}
+
+function openVisitorPopover(nodeGroup) {
+  const pop = document.getElementById("visitor-popover");
+  if (!pop.hidden) { closeVisitorPopover(); return; }   // toggle
+  fillVisitorPopover();
+  pop.hidden = false;
+  // Anchor above the visitor node (fixed positioning → viewport coordinates),
+  // clamped so it never spills off-screen.
+  const r = nodeGroup.getBoundingClientRect();
+  const pw = pop.offsetWidth, ph = pop.offsetHeight;
+  let left = Math.max(8, Math.min(r.left, window.innerWidth - pw - 8));
+  let top = r.top - ph - 10;
+  if (top < 8) top = Math.min(r.bottom + 10, window.innerHeight - ph - 8);
+  pop.style.left = left + "px";
+  pop.style.top = top + "px";
+}
+
+function closeVisitorPopover() {
+  document.getElementById("visitor-popover").hidden = true;
+}
+
+async function poll() {
+  try {
+    const res = await fetch(SNAPSHOT_URL + "?_=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("http " + res.status);
+    const data = await res.json();
+    lastOkAt = Date.now();
+    setStatus(true);
+    const raw = JSON.stringify(data);
+    if (raw !== lastSnapshotRaw) {
+      lastSnapshotRaw = raw;
+      renderGraph(data);
+      renderTrace(data.pipeline_trace || []);
+      renderMap(data.geometry || {});
+    }
+  } catch (e) {
+    setStatus(false);
+  }
+}
+
+buildFlowStrip();
+buildLegend();
+setStatus(false);
+renderMap({});
+
+// Visitor popover: close on ✕, on Escape, or on any click outside it. Clicks on
+// the visitor node call stopPropagation, so they never reach this and toggle instead.
+document.getElementById("visitor-popover-close").addEventListener("click", closeVisitorPopover);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeVisitorPopover(); });
+document.addEventListener("click", (e) => {
+  const pop = document.getElementById("visitor-popover");
+  if (!pop.hidden && !pop.contains(e.target)) closeVisitorPopover();
+});
+
+poll();
+setInterval(poll, POLL_MS);
+</script>
+</body>
+</html>
